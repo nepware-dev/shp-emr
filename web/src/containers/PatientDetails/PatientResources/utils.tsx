@@ -21,8 +21,8 @@ import { ResourceTable, Option } from './ResourceTable';
 export function getOptions(patient: WithId<Patient>): Option[] {
     return [
         {
-            value: 'active-medications',
-            label: 'Active Medications',
+            value: 'medications',
+            label: 'Medications',
             renderTable: (option: Option) => (
                 <ResourceTable<MedicationStatement>
                     key={`resource-table-${option.value}`}
@@ -52,6 +52,15 @@ export function getOptions(patient: WithId<Patient>): Option[] {
                     key: 'date',
                     render: (r: MedicationStatement) => (r.dosage?.[0]?.text ? r.dosage?.[0]?.text : ''),
                     width: 200,
+                },
+                {
+                    title: t`Status`,
+                    key: 'status',
+                    render: (r: MedicationStatement) => {
+                        const readableStatus = (r.status || '').split('-').join(' ');
+                        return readableStatus.charAt(0).toUpperCase() + readableStatus.slice(1);
+                    },
+                    width: 120,
                 },
             ],
         },
@@ -86,9 +95,7 @@ export function getOptions(patient: WithId<Patient>): Option[] {
                     title: t`Date`,
                     key: 'date',
                     render: (r: Condition) => {
-                        const createdAt = extractExtension(r.meta?.extension, 'ex:createdAt');
-
-                        return createdAt ? formatHumanDate(r.recordedDate || createdAt) : null;
+                        return r.recordedDate ? formatHumanDate(r.recordedDate) : null;
                     },
                     width: 200,
                 },
@@ -201,9 +208,7 @@ export function getOptions(patient: WithId<Patient>): Option[] {
                     title: t`Date`,
                     key: 'date',
                     render: (r: Consent) => {
-                        const createdAt = extractExtension(r.meta?.extension, 'ex:createdAt');
-
-                        return createdAt ? formatHumanDate(r.dateTime || createdAt) : null;
+                        return r.dateTime ? formatHumanDate(r.dateTime) : null;
                     },
                     width: 100,
                 },

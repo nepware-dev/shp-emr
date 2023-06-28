@@ -13,6 +13,7 @@ export function usePatientList(filterValues: StringTypeColumnFilterValue[]) {
 
     const queryParameters = {
         _sort: '-_lastUpdated',
+        _total: 'accurate',
         ...(patientFilterValue ? { name: patientFilterValue.value } : {}),
     };
 
@@ -21,10 +22,7 @@ export function usePatientList(filterValues: StringTypeColumnFilterValue[]) {
         StringTypeColumnFilterValue[]
     >('Patient', queryParameters, debouncedFilterValues);
 
-    const patientsResponse = mapSuccess(
-        resourceResponse,
-        (bundle) => extractBundleResources(bundle).Patient,
-    );
+    const patientsResponse = mapSuccess(resourceResponse, (bundle) => extractBundleResources(bundle).Patient);
 
     return {
         pagination,

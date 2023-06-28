@@ -76,7 +76,7 @@ export function usePatientOverview(props: Props) {
         },
         {
             title: 'SSN',
-            value: patient.identifier?.find(({ system }) => system === '1.2.643.100.3')?.value,
+            value: patient.identifier?.find(({ system }) => system === 'http://hl7.org/fhir/sid/us-ssn')?.value,
         },
     ];
 

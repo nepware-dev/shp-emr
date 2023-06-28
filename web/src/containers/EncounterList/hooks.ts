@@ -37,10 +37,7 @@ export function useEncounterList(
     const dateFilterValue = filterValues?.[2]?.value ?? undefined;
 
     const dateParameter = dateFilterValue
-        ? [
-              `ge${formatFHIRDateTime(dateFilterValue[0])}`,
-              `le${formatFHIRDateTime(dateFilterValue[1])}`,
-          ]
+        ? [`ge${formatFHIRDateTime(dateFilterValue[0])}`, `le${formatFHIRDateTime(dateFilterValue[1])}`]
         : undefined;
 
     const queryParameters = {
@@ -50,6 +47,7 @@ export function useEncounterList(
             'Encounter:participant:PractitionerRole',
             'PractitionerRole:practitioner:Practitioner',
         ],
+        _total: 'accurate',
         'participant-display': practitionerFilterValue,
         'subject:Patient.name': patientFilterValue,
         date: dateParameter,
@@ -76,20 +74,19 @@ export function useEncounterList(
 
             return encounters.map((encounter) => {
                 const patient = patients.find(
-                    (patient) =>
-                        encounter.subject &&
-                        patient.id === parseFHIRReference(encounter.subject).id,
+                    (p) => encounter.subject && p.id === parseFHIRReference(encounter.subject).id,
                 );
 
                 const practitionerRole = practitionerRoles.find(
-                    (practitionerRole) =>
+                    (pr) =>
                         encounter.participant?.[0]!.individual &&
-                        practitionerRole.id ===
-                            parseFHIRReference(encounter.participant?.[0]!.individual).id,
+                        pr.id === parseFHIRReference(encounter.participant?.[0]!.individual).id,
                 );
 
                 const practitioner = practitioners.find(
-                    (practitioner) => practitionerRole?.practitioner && practitioner.id === parseFHIRReference(practitionerRole?.practitioner).id,
+                    (p) =>
+                        practitionerRole?.practitioner &&
+                        p.id === parseFHIRReference(practitionerRole?.practitioner).id,
                 );
 
                 return {
@@ -98,8 +95,7 @@ export function useEncounterList(
                     practitioner,
                     status: encounter.status,
                     period: encounter?.period,
-                    humanReadableDate:
-                        encounter?.period?.start && formatHumanDateTime(encounter?.period?.start),
+                    humanReadableDate: encounter?.period?.start && formatHumanDateTime(encounter?.period?.start),
                 };
             });
         });

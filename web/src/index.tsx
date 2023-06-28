@@ -30,6 +30,9 @@ const I18nApp = () => {
                             colorBgHeader: '#fff',
                         },
                     },
+                    token: {
+                        colorPrimary: '#0170B9',
+                    },
                 }}
             >
                 <App />

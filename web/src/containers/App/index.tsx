@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro';
+import { isSuccess } from 'fhir-react/lib/libs/remoteData';
 import queryString from 'query-string';
 import { useEffect, useRef } from 'react';
 import { Route, unstable_HistoryRouter as HistoryRouter, Routes, Navigate } from 'react-router-dom';
@@ -24,8 +25,8 @@ import { QuestionnaireBuilder } from 'src/containers/QuestionnaireBuilder';
 import { QuestionnaireList } from 'src/containers/QuestionnaireList';
 import { SignIn } from 'src/containers/SignIn';
 import { VideoCall } from 'src/containers/VideoCall';
-import { getToken } from 'src/services/auth';
-import { parseOAuthState, setToken } from 'src/services/auth';
+import { getAuthState } from 'src/services/auth';
+import { parseOAuthState, setAuthState, getAccessTokenFromCode } from 'src/services/auth';
 import { history } from 'src/services/history';
 import { sharedAuthorizedPatient } from 'src/sharedState';
 import { Role, matchCurrentUserRole } from 'src/utils/role';
@@ -34,16 +35,20 @@ import { restoreUserSession } from './utils';
 
 export function App() {
     const [userResponse] = useService(async () => {
-        const appToken = getToken();
-        return appToken ? restoreUserSession(appToken) : success(null);
+        const appAuthState = getAuthState();
+        return appAuthState ? restoreUserSession(appAuthState) : success(null);
     });
 
     const renderRoutes = (user: User | null) => {
         if (user) {
-            return matchCurrentUserRole({
-                [Role.Admin]: () => <AuthenticatedAdminUserApp />,
-                [Role.Patient]: () => <AuthenticatedPatientUserApp />,
-            });
+            try {
+                return matchCurrentUserRole({
+                    [Role.Admin]: () => <AuthenticatedAdminUserApp />,
+                    [Role.Patient]: () => <AuthenticatedPatientUserApp />,
+                });
+            } catch (err) {
+                console.log(err);
+            }
         }
 
         return <AnonymousUserApp />;
@@ -52,7 +57,9 @@ export function App() {
     return (
         <div data-testid="app-container">
             <RenderRemoteData remoteData={userResponse} renderLoading={Spinner}>
-                {(user) => <HistoryRouter history={history}>{renderRoutes(user)}</HistoryRouter>}
+                {(user) => {
+                    return <HistoryRouter history={history}>{renderRoutes(user)}</HistoryRouter>;
+                }}
             </RenderRemoteData>
         </div>
     );
@@ -62,15 +69,26 @@ export function Auth() {
     const location = useLocation();
 
     useEffect(() => {
-        const queryParams = queryString.parse(location.hash);
-
-        if (queryParams.access_token) {
-            setToken(queryParams.access_token as string);
-            const state = parseOAuthState(queryParams.state as string | undefined);
-
-            window.location.href = state.nextUrl ?? '/';
+        async function getAccessToken(code: string) {
+            try {
+                const res = await getAccessTokenFromCode(code, '/auth');
+                if (isSuccess(res)) {
+                    setAuthState(res.data);
+                }
+                const state = parseOAuthState(queryParams.state as string | undefined);
+                window.location.href = state.nextUrl ?? '/';
+            } catch (err) {
+                console.log(err);
+                window.location.href = '/';
+            }
         }
-    }, [location.hash]);
+
+        const queryParams = queryString.parse(location.search);
+
+        if (queryParams.code) {
+            getAccessToken(queryParams.code as string);
+        }
+    }, [location.search]);
 
     return null;
 }

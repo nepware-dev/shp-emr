@@ -1,5 +1,5 @@
 import { WithId } from 'fhir-react';
-import { Patient, Practitioner } from 'fhir/r4b';
+import { Patient as PatientResource, Practitioner } from 'fhir/r4b';
 
 import { User } from 'shared/src/contrib/aidbox';
 
@@ -17,7 +17,7 @@ export function selectUserRole<T>(user: User, options: { [role in Role]: T }): T
 }
 
 export function matchCurrentUserRole<T>(options: {
-    [Role.Patient]: (patient: WithId<Patient>) => T;
+    [Role.Patient]: (patient: WithId<PatientResource>) => T;
     [Role.Admin]: (patient: WithId<Practitioner>) => T;
 }): T {
     return selectUserRole(sharedAuthorizedUser.getSharedState()!, {
@@ -26,8 +26,8 @@ export function matchCurrentUserRole<T>(options: {
     })();
 }
 
-export function selectCurrentUserRoleResource(): WithId<Patient> | WithId<Practitioner> {
-    return matchCurrentUserRole<WithId<Patient> | WithId<Practitioner>>({
+export function selectCurrentUserRoleResource(): WithId<PatientResource> | WithId<Practitioner> {
+    return matchCurrentUserRole<WithId<PatientResource> | WithId<Practitioner>>({
         [Role.Admin]: (practitioner) => practitioner,
         [Role.Patient]: (patient) => patient,
     });

@@ -1,7 +1,5 @@
 import { t } from '@lingui/macro';
 import { Button, Segmented } from 'antd';
-import Text from 'antd/lib/typography/Text';
-import noop from 'lodash/noop';
 import { useState } from 'react';
 
 import { AppFooter } from 'src/components/BaseLayout/Footer';
@@ -31,18 +29,18 @@ export function SignIn(props: SignInProps) {
         <div className={s.container}>
             <div className={s.form}>
                 <div className={s.header}>
-                    <Text className={s.title}>{t`Welcome to`}</Text>
                     <img src={logo} alt="" />
                 </div>
                 <Segmented
                     value={signInService}
-                    options={[SignInService.EMR, SignInService.PatientPortal]}
+                    options={[
+                        SignInService.EMR,
+                        // SignInService.PatientPortal,
+                    ]}
                     block
                     onChange={(value) => setSignInService(value as SignInService)}
                     className={s.signInServiceSelectLabel}
                     // For some reason these two props are declared as required in antd
-                    onResize={noop}
-                    onResizeCapture={noop}
                 />
                 {signInService === SignInService.EMR ? (
                     <>
@@ -53,11 +51,7 @@ export function SignIn(props: SignInProps) {
                                 {t`Password`}: password
                             </div>
                         </div>
-                        <Button
-                            type="primary"
-                            onClick={() => authorize({ nextUrl: props.originPathName })}
-                            size="large"
-                        >
+                        <Button type="primary" onClick={() => authorize({ nextUrl: '/auth' })} size="large">
                             {t`Log in as Practitioner`}
                         </Button>
                     </>

@@ -4,7 +4,7 @@ export default {
     ...commonConfig,
 
     tier: 'production',
-    baseURL: 'https://aidbox.emr.beda.software',
+    baseURL: 'https://shp.dev.nepware.io/v/r4',
     sdcIdeUrl: 'https://sdc.beda.software',
     aiQuestionnaireBuilderUrl: 'https://builder.emr.beda.software',
 

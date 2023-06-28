@@ -28,6 +28,7 @@ export function usePractitionersList(filterValues: StringTypeColumnFilterValue[]
 
     const queryParameters = {
         _sort: '-_lastUpdated',
+        _total: 'accurate',
         ...(practitionerFilterValue ? { name: practitionerFilterValue.value } : {}),
     };
 
