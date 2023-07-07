@@ -73,12 +73,11 @@
 
     &:hover:not(:global(.ant-menu-item-selected)) {
         background: 0 !important;
-        color: #3366ff !important;
+        color: var(--color-primary) !important;
     }
 
     &:global(.ant-menu-item-selected) {
         background-color: #f5f5f5 !important;
-        color: #3366ff !important;
         color: #0a0e2c !important;
     }
 }

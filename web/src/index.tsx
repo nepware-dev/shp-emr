@@ -1,6 +1,6 @@
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider as ANTDConfigProvider } from 'antd';
 import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -15,6 +15,7 @@ import 'shared/src/services/i18n';
 import { App } from 'src/containers/App';
 
 import * as serviceWorker from './serviceWorker';
+import { getANTDTheme } from './styles/theme';
 
 const I18nApp = () => {
     useEffect(() => {
@@ -23,20 +24,9 @@ const I18nApp = () => {
 
     return (
         <I18nProvider i18n={i18n}>
-            <ConfigProvider
-                theme={{
-                    components: {
-                        Layout: {
-                            colorBgHeader: '#fff',
-                        },
-                    },
-                    token: {
-                        colorPrimary: '#0170B9',
-                    },
-                }}
-            >
+            <ANTDConfigProvider theme={getANTDTheme()}>
                 <App />
-            </ConfigProvider>
+            </ANTDConfigProvider>
         </I18nProvider>
     );
 };
