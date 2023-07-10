@@ -90,7 +90,7 @@ export async function restoreUserSession(authState: LocalAuthState): Promise<any
                 console.warn('Error, while fetching Jitsi auth token: ', formatError(jitsiAuthTokenResponse.error));
             }
         } else {
-            if (extractErrorCode(userResponse.error) !== 'network_error') {
+            if (extractErrorCode(userResponse.error) === 'expired_token') {
                 const refreshToken = getRefreshToken();
                 if (refreshToken) {
                     refreshAccessToken(refreshToken);
@@ -98,6 +98,8 @@ export async function restoreUserSession(authState: LocalAuthState): Promise<any
                     resetInstanceTokens();
                     return success(null);
                 }
+            } else {
+                return success(null);
             }
         }
         return userResponse;

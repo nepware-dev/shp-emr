@@ -85,6 +85,10 @@ export function Auth() {
 
         const queryParams = queryString.parse(location.search);
 
+        if (queryParams.error) {
+            window.location.href = `/signin/${location.search}`;
+        }
+
         if (queryParams.code) {
             getAccessToken(queryParams.code as string);
         }
