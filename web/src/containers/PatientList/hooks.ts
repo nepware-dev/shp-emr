@@ -13,7 +13,7 @@ export function usePatientList(filterValues: StringTypeColumnFilterValue[]) {
 
     const queryParameters = {
         _sort: '-_lastUpdated',
-        _total: 'accurate',
+        _format: 'json',
         ...(patientFilterValue ? { name: patientFilterValue.value } : {}),
     };
 

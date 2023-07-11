@@ -30,7 +30,13 @@ export function usePagerExtended<T extends Resource, F = unknown>(
     const pagination = {
         current: pagerManager.currentPage,
         pageSize: pageSize,
-        total: isSuccess(resourceResponse) ? resourceResponse.data.total : 0,
+        total: !isSuccess(resourceResponse)
+            ? 0
+            : pagerManager.hasNext
+            ? pagerManager.currentPage * pageSize + 1
+            : pagerManager.hasPrevious
+            ? pagerManager.currentPage * pageSize - 1
+            : 0,
     };
 
     return { resourceResponse, pagerManager, handleTableChange, pagination };

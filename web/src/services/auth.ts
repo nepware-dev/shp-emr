@@ -35,6 +35,7 @@ export type LocalAuthState = ResponseAuthState & { expires_at?: Date };
 
 export interface OAuthState {
     nextUrl?: string;
+    loginType?: 'patient' | 'provider';
 }
 
 export function parseOAuthState(state?: string): OAuthState {
@@ -73,10 +74,20 @@ export function getAuthorizeUrl(state?: OAuthState) {
 
     const baseURL = new URL(config.baseURL);
 
-    const launchParams = encode(DEFAULT_LAUNCH_PARAMS);
+    const launchParams = encode({
+        ...DEFAULT_LAUNCH_PARAMS,
+        launch_type: state?.loginType === 'provider' ? 'provider-ehr' : 'patient-portal',
+    });
     const launchStr = `&launch=${launchParams}`;
 
-    return `${baseURL.origin}/provider-login?login_type=provider&client_id=${config.clientId}&response_type=code${redirectUriStr}${audStr}${launchStr}`;
+    const loginType = state?.loginType || 'provider';
+
+    const scopeStr =
+        loginType === 'patient'
+            ? `&scope=patient/*.*+openid+profile+fhirUser+offline_access`
+            : `&scope=user/*.*+openid+profile+fhirUser+offline_access`;
+
+    return `${baseURL.origin}/${loginType}-login?login_type=${loginType}&client_id=${config.clientId}&response_type=code${redirectUriStr}${audStr}${launchStr}${scopeStr}`;
 }
 
 export function getToken() {
