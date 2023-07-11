@@ -31,7 +31,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #2f54eb;
+    background-color: var(--color-primary);
     width: 48px;
     height: 48px;
     min-width: 48px;
@@ -40,7 +40,7 @@
     font-size: 24px;
 
     .card:global(._empty) & {
-        background-color: #adc6ff;
+        filter: opacity(50%);
     }
 }
 

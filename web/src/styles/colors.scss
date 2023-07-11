@@ -1,7 +1,19 @@
-// palette colors
-$blue: #0170B9;
+:root {
+    --color-white: #FFFFFF;
+    --color-black: #000000;
 
-$white: #ffffff;
+    --color-primary: #0170B9;
+    --color-secondary: #Cf2E2E;
+    --color-background: #FAFCFF;
 
-// app theme
-$primary: $blue;
+    --color-text-50: #E7E6E7;
+    --color-text-100: #B4B3B5;
+    --color-text-200: #8F8E91;
+    --color-text-300: #5C5A5F;
+    --color-text-400: #3D3A40;
+    --color-text-500: #0C0910;
+    --color-text-600: #0B080F;
+    --color-text-700: #09060B;
+    --color-text-800: #070509;
+    --color-text-900: #050407;
+}

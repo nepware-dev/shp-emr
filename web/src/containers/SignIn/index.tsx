@@ -40,7 +40,6 @@ export function SignIn(props: SignInProps) {
                     block
                     onChange={(value) => setSignInService(value as SignInService)}
                     className={s.signInServiceSelectLabel}
-                    // For some reason these two props are declared as required in antd
                 />
                 {signInService === SignInService.EMR ? (
                     <>
