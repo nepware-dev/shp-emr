@@ -15,7 +15,15 @@ import {
 
 import { User } from 'shared/src/contrib/aidbox';
 
-import { getJitsiAuthToken, getUserInfo } from 'src/services/auth';
+import {
+    getJitsiAuthToken,
+    getUserInfo,
+    getRefreshToken,
+    getAccessTokenUsingRefreshToken,
+    setAuthState,
+    removeAuthState,
+    type LocalAuthState,
+} from 'src/services/auth';
 import {
     sharedAuthorizedPatient,
     sharedAuthorizedPractitioner,
@@ -54,33 +62,66 @@ async function populateUserInfoSharedState(user: User) {
     await fetchUserRoleDetails();
 }
 
-export async function restoreUserSession(token: string) {
-    setAidboxInstanceToken({ access_token: token, token_type: 'Bearer' });
-    setFHIRInstanceToken({ access_token: token, token_type: 'Bearer' });
-
-    const userResponse = await getUserInfo();
-
-    if (aidboxReactRemoteData.isSuccess(userResponse)) {
-        await populateUserInfoSharedState(userResponse.data);
-
-        const jitsiAuthTokenResponse = await getJitsiAuthToken();
-        if (aidboxReactRemoteData.isSuccess(jitsiAuthTokenResponse)) {
-            sharedJitsiAuthToken.setSharedState(jitsiAuthTokenResponse.data.jwt);
+export async function restoreUserSession(authState: LocalAuthState): Promise<any> {
+    const { access_token: token, expires_at, refresh_token } = authState;
+    if (refresh_token && expires_at) {
+        const msToExpiry = +new Date(expires_at) - Date.now();
+        if (msToExpiry <= 60000) {
+            return refreshAccessToken(refresh_token);
         }
-        if (aidboxReactRemoteData.isFailure(jitsiAuthTokenResponse)) {
-            console.warn(
-                'Error, while fetching Jitsi auth token: ',
-                formatError(jitsiAuthTokenResponse.error),
-            );
-        }
-    } else {
-        if (extractErrorCode(userResponse.error) !== 'network_error') {
-            resetAidboxInstanceToken();
-            resetFHIRInstanceToken();
-
-            return success(null);
+        if (!isNaN(msToExpiry)) {
+            setTimeout(() => refreshAccessToken(refresh_token), msToExpiry - 60000);
         }
     }
 
-    return userResponse;
+    setAidboxInstanceToken({ access_token: token, token_type: 'Bearer' });
+    setFHIRInstanceToken({ access_token: token, token_type: 'Bearer' });
+
+    try {
+        const userResponse = await getUserInfo();
+        if (aidboxReactRemoteData.isSuccess(userResponse)) {
+            await populateUserInfoSharedState(userResponse.data);
+
+            const jitsiAuthTokenResponse = await getJitsiAuthToken();
+            if (aidboxReactRemoteData.isSuccess(jitsiAuthTokenResponse)) {
+                sharedJitsiAuthToken.setSharedState(jitsiAuthTokenResponse.data.jwt);
+            }
+            if (aidboxReactRemoteData.isFailure(jitsiAuthTokenResponse)) {
+                console.warn('Error, while fetching Jitsi auth token: ', formatError(jitsiAuthTokenResponse.error));
+            }
+        } else {
+            if (extractErrorCode(userResponse.error) !== 'network_error') {
+                const refreshToken = getRefreshToken();
+                if (refreshToken) {
+                    refreshAccessToken(refreshToken);
+                } else {
+                    resetInstanceTokens();
+                    return success(null);
+                }
+            }
+        }
+        return userResponse;
+    } catch (err) {
+        resetInstanceTokens();
+        return success(null);
+    }
+}
+
+async function refreshAccessToken(refreshToken: string) {
+    const refreshTokenResponse = await getAccessTokenUsingRefreshToken(refreshToken);
+    if (isSuccess(refreshTokenResponse)) {
+        const localAuthState = setAuthState(refreshTokenResponse.data);
+        return restoreUserSession(localAuthState);
+    } else {
+        removeAuthState();
+        resetInstanceTokens();
+        return success(null);
+    }
+}
+
+function resetInstanceTokens() {
+    removeAuthState();
+
+    resetAidboxInstanceToken();
+    resetFHIRInstanceToken();
 }

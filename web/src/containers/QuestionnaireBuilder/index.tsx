@@ -24,8 +24,8 @@ export function QuestionnaireBuilder() {
         useQuestionnaireBuilder();
     const [questionnaireItem, setQuestionnaireItem] = useState<QuestionItemProps | undefined>();
     const [groupItem, setGroupItem] = useState<GroupItemProps | undefined>();
-    console.log('questionnaireItem', questionnaireItem);
-    console.log('response', response);
+    //  console.log('questionnaireItem', questionnaireItem);
+    //  console.log('response', response);
 
     return (
         <>

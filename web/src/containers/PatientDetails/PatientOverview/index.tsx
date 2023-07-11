@@ -65,7 +65,11 @@ export function PatientOverview(props: PatientOverviewProps) {
                     card.total && card.total > 7 ? (
                         <Link to={`${location.pathname}/resources/${card.key}`}>
                             <b>
-                                <Trans>See all</Trans>
+                                {card.key === 'active-medications' ? (
+                                    <Trans>See all medications</Trans>
+                                ) : (
+                                    <Trans>See all</Trans>
+                                )}
                                 {` (${card.total})`}
                             </b>
                         </Link>
@@ -83,11 +87,11 @@ export function PatientOverview(props: PatientOverviewProps) {
                 {({ cards, appointments }) => {
                     const leftColCards = _.filter(
                         cards,
-                        (c: OverviewCard, index: number) => index % 2 === 0 && c.key !== 'activities',
+                        (c: OverviewCard, index: number) => index % 2 === 0,
                     ) as OverviewCard[];
                     const rightColCards = _.filter(
                         cards,
-                        (c: OverviewCard, index: number) => index % 2 !== 0 || c.key === 'activities',
+                        (c: OverviewCard, index: number) => index % 2 !== 0,
                     ) as OverviewCard[];
 
                     return (

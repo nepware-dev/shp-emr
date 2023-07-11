@@ -3,5 +3,5 @@
 // environment settings
 
 export default {
-    clientId: 'web'
+    clientId: 'whatever',
 };

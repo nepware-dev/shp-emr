@@ -2,42 +2,30 @@ import { PractitionerRole } from 'fhir/r4b';
 import _ from 'lodash';
 import React, { useCallback, useMemo } from 'react';
 
-import {
-    days,
-    DaySchedule,
-    DaySchedules,
-    fromAvailableTime,
-    ScheduleBreak,
-} from '../available-time';
+import { days, DaySchedule, DaySchedules, fromAvailableTime, ScheduleBreak } from '../available-time';
 
 interface Props {
     practitionerRole: PractitionerRole;
 }
 
 export function useAvailability({ practitionerRole }: Props) {
-    const initialSchedule = useMemo(
-        () => fromAvailableTime(practitionerRole.availableTime || []),
-        [practitionerRole],
-    );
+    const initialSchedule = useMemo(() => fromAvailableTime(practitionerRole.availableTime || []), [practitionerRole]);
     const [schedule, setSchedulesByDay] = React.useState<DaySchedules>(initialSchedule);
-    const scheduleHasChanges = useMemo(
-        () => !_.isEqual(initialSchedule, schedule),
-        [initialSchedule, schedule],
-    );
+    const scheduleHasChanges = useMemo(() => !_.isEqual(initialSchedule, schedule), [initialSchedule, schedule]);
     const setScheduleByDay = (day: string, fn: (schedule: DaySchedule) => DaySchedule) => {
         setSchedulesByDay((schedules) => {
-            const schedule = schedules[day];
+            const s = schedules[day];
 
             return {
                 ...schedules,
-                ...(schedule ? { [day]: fn(schedule) } : {}),
+                ...(s ? { [day]: fn(s) } : {}),
             };
         });
     };
     const setBreaksByDay = (day: string, fn: (breaks: ScheduleBreak[]) => ScheduleBreak[]) => {
-        setScheduleByDay(day, (schedule) => ({
-            ...schedule,
-            breaks: fn(schedule.breaks || []),
+        setScheduleByDay(day, (s) => ({
+            ...s,
+            breaks: fn(s.breaks || []),
         }));
     };
     const addBreak = (day: string) => {
@@ -70,12 +58,12 @@ export function useAvailability({ practitionerRole }: Props) {
     };
 
     const changeScheduleStart = (day: string, value: string | undefined) => {
-        setScheduleByDay(day, (schedule) => {
-            return { ...schedule, start: value };
+        setScheduleByDay(day, (s) => {
+            return { ...s, start: value };
         });
     };
     const changeScheduleEnd = (day: string, value: string | undefined) => {
-        setScheduleByDay(day, (schedule) => ({ ...schedule, end: value }));
+        setScheduleByDay(day, (s) => ({ ...s, end: value }));
     };
     const setBreakByDay = (day: string, index: number, fn: (b: ScheduleBreak) => ScheduleBreak) => {
         setBreaksByDay(day, (breaks) =>

@@ -22,7 +22,7 @@ export function usePagerExtended<T extends Resource, F = unknown>(
             setPageSize(pagination.pageSize);
         } else {
             pagerManager.loadPage(pagination.current, {
-                _page: pagination.current,
+                _getpagesoffset: (pagination.current - 1) * pageSize,
             });
         }
     };
