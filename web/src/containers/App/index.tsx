@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro';
 import { isSuccess } from 'fhir-react/lib/libs/remoteData';
 import queryString from 'query-string';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Route, unstable_HistoryRouter as HistoryRouter, Routes, Navigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -34,10 +34,28 @@ import { Role, matchCurrentUserRole } from 'src/utils/role';
 import { restoreUserSession } from './utils';
 
 export function App() {
-    const [userResponse] = useService(async () => {
+    const [userResponse, { reload }] = useService(async () => {
         const appAuthState = getAuthState();
         return appAuthState ? restoreUserSession(appAuthState) : success(null);
     });
+
+    const onVisibilityChange = useCallback(() => {
+        if (document.visibilityState === 'visible') {
+            const appAuthState = getAuthState();
+            if (appAuthState?.expires_at) {
+                const msToExpiry = +new Date(appAuthState?.expires_at) - Date.now();
+                if (msToExpiry <= 60000) {
+                    reload();
+                }
+            }
+        }
+    }, [reload]);
+
+    useEffect(() => {
+        document.addEventListener('visibilitychange', onVisibilityChange);
+
+        return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+    }, [onVisibilityChange]);
 
     const renderRoutes = (user: User | null) => {
         if (user) {

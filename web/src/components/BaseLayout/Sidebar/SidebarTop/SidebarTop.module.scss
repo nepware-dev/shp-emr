@@ -6,15 +6,16 @@
 }
 
 .logoWrapper {
-    height: 68px;
+    height: 150px;
     display: flex;
     align-items: center;
     gap: 7px;
-    padding: 0 46px;
-    transition: padding 0.2s;
+    margin: 0 62px;
+    transition: margin 0.2s;
 
     .container:global(._collapsed) & {
-        padding: 0 12px;
+        height: 86px;
+        margin: 0 8px;
     }
 }
 
@@ -22,6 +23,7 @@
     display: none;
     opacity: 0;
     transition: all 0s;
+    height: 50px;
 
     .container:global(._collapsed) & {
         display: block;
@@ -33,7 +35,7 @@
 .logoCompanyName {
     opacity: 1;
     transition: all 0.6s;
-    height: 50px;
+    height: 106px;
 
     .container:global(._collapsed) & {
         opacity: 0;

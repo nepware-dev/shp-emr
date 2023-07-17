@@ -3,7 +3,6 @@ import { Menu } from 'antd';
 import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
 
-import logoSmall from 'src/icons/brand/logo-small.svg';
 import encountersIcon from 'src/icons/menu/encounters.svg';
 import patientsIcon from 'src/icons/menu/patients.svg';
 import practitionersIcon from 'src/icons/menu/practitioners.svg';
@@ -49,7 +48,7 @@ export function SidebarTop(props: Props) {
             })}
         >
             <Link to="/" className={s.logoWrapper}>
-                <img src={logoSmall} className={s.logoSmall} alt="" />
+                <img src={logo} className={s.logoSmall} alt="" />
                 <img src={logo} className={s.logoCompanyName} alt="" />
             </Link>
             <div className={s.divider} />
