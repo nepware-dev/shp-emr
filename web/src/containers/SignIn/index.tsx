@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import bannerScreen from 'src/images/banner-screen.png';
 import logo from 'src/images/logo.svg';
 import stethoscope from 'src/images/stethoscope.svg';
 import { getAuthorizeUrl, OAuthState } from 'src/services/auth';
@@ -75,6 +76,7 @@ export function SignIn(props: SignInProps) {
             <div className={s.banner}>
                 <h2 className={s.bannerTitle}>Protecting your privacy while improving care</h2>
                 <img src={stethoscope} alt="" />
+                <img className={s.bannerImage} src={bannerScreen} alt="" />
             </div>
         </div>
     );
