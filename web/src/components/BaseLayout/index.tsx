@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { ReactNode } from 'react';
 
 import s from './BaseLayout.module.scss';
-import { AppFooter } from './Footer';
+// import { AppFooter } from './Footer';
 import { AppSidebar } from './Sidebar';
 
 interface Props {
@@ -17,7 +17,7 @@ export function BaseLayout({ children, style }: Props) {
             <AppSidebar />
             <Layout className={s.content}>
                 {children}
-                <AppFooter />
+                {/*<AppFooter />*/}
             </Layout>
         </Layout>
     );
