@@ -30,7 +30,7 @@ export function processLaunchContext(fhirQuestionnaire: FHIRQuestionnaire): any[
         return undefined;
     }
 
-    const launchContextArray = [];
+    const launchContextArray: any[] = [];
     for (const launchContextExtension of launchContextExtensions) {
         const nameExtension = launchContextExtension.extension?.find((ext) => ext.url === 'name');
         const typeExtensions = launchContextExtension.extension?.filter((ext) => ext.url === 'type');

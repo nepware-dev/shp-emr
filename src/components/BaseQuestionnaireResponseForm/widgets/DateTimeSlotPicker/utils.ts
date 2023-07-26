@@ -18,7 +18,7 @@ function praseSlotDuration(slotDuration: string) {
 function getPeriodTimeSlots(start: moment.Moment, end: moment.Moment, slotDuration: string) {
     let startTime = start;
     let endTime = end;
-    let timeStops = [];
+    let timeStops: string[] = [];
     const { hours, minutes, seconds } = praseSlotDuration(slotDuration);
 
     while (startTime.isBefore(endTime)) {

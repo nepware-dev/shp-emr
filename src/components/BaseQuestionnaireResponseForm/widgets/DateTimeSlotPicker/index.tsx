@@ -155,14 +155,17 @@ function AvailableDateControl(props: AvailableDatePickerProps & { practitionerRo
                         showToday={false}
                         format={humanDateTime}
                         minuteStep={5 as 5}
-                        onChange={(date) => onDateChange(date, timeSlots)}
+                        onChange={(date) => onDateChange(
+                            date,
+                            timeSlots as TimeSlots,
+                        )}
                         value={value ? parseFHIRDateTime(value) : undefined}
                         disabled={disabled}
                         disabledDate={(date) => !enabledDates.includes(formatFHIRDate(date))}
-                        disabledTime={(date) => getDisabledTime(date, timeSlots)}
+                        disabledTime={(date) => getDisabledTime(date, timeSlots as TimeSlots)}
                         onBlur={(e) => {
                             const date = e.target.value ? moment(e.target.value, humanDateTime) : null;
-                            onDateChange(date, timeSlots);
+                            onDateChange(date, timeSlots as TimeSlots);
                         }}
                     />
                 );

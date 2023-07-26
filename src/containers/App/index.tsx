@@ -76,6 +76,7 @@ export function App() {
         <div data-testid="app-container">
             <RenderRemoteData remoteData={userResponse} renderLoading={Spinner}>
                 {(user) => {
+                    // @ts-expect-error Incompatible package
                     return <HistoryRouter history={history}>{renderRoutes(user)}</HistoryRouter>;
                 }}
             </RenderRemoteData>
