@@ -30,6 +30,7 @@ backend/env/
 backend/htmlcov/
 backend/.coverage
 backend/gunicorn.pid
+dist/
 
 .history
 

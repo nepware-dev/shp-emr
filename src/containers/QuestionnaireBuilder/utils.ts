@@ -58,7 +58,7 @@ export function moveQuestionnaireItem(
     const newTargetItems: FCEQuestionItem[] = _.get(newQuestionnaire, newTargetItemsPath);
 
     const targetIndex = newTargetItems.findIndex((i) => i.linkId === targetItem.questionItem.linkId);
-    let resultTargetItems = [];
+    let resultTargetItems: FCEQuestionnaireItem[] = [];
     if (place === 'after') {
         resultTargetItems = [
             ...newTargetItems.slice(0, targetIndex + 1),

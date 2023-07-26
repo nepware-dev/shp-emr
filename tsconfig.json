@@ -1,3 +1,38 @@
 {
-    "extends": "./tsconfig.base.json"
+    "compilerOptions": {
+        "target": "ES2021",
+        "useDefineForClassFields": true,
+        "lib": ["ES2021", "DOM", "DOM.Iterable"],
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "paths": {
+         "src/*": ["./src/*"],
+         "shared/*": ["./shared/*"]
+       },
+
+       /* Linting */
+       "strict": true,
+       "noUnusedLocals": true,
+       // "noUnusedParameters": true,
+       "noFallthroughCasesInSwitch": true,
+       "noImplicitAny": false,
+       "strictNullChecks": true,
+       "noImplicitThis": true,
+       "allowSyntheticDefaultImports": true,
+       "forceConsistentCasingInFileNames": true,
+       "noUncheckedIndexedAccess": true,
+    },
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    "exclude": ["node_modules"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }
