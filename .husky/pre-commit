@@ -1,1 +1,4 @@
 yarn run lint-staged
+
+yarn extract
+git add shared/src/locale
