@@ -20,11 +20,7 @@ function authorize(state?: OAuthState) {
     window.location.href = getAuthorizeUrl(state);
 }
 
-interface SignInProps {
-    originPathName?: string;
-}
-
-export function SignIn(props: SignInProps) {
+export function SignIn() {
     const [signInService, setSignInService] = useState<string>(SignInService.EMR);
 
     const location = useLocation();
@@ -40,8 +36,8 @@ export function SignIn(props: SignInProps) {
                     <div className={s.header}>
                         <h1 className={s.title}>Welcome to Smart Health EMR Platform</h1>
                         <p className={s.description}>
-                            Securely login to your EMR account with ease. Click the 'Login' button below to log in to
-                            your account.
+                            Securely login to your EMR account with ease. Click the &lsquo;Login&rsquo; button below to
+                            log in to your account.
                         </p>
                     </div>
                     <Segmented
@@ -51,13 +47,6 @@ export function SignIn(props: SignInProps) {
                         onChange={(value) => setSignInService(value as SignInService)}
                         className={s.signInServiceSelectLabel}
                     />
-                    <div className={s.message}>
-                        <b>{t`On the next page, please, use the following credentials`}</b>
-                        <div>
-                            {t`Username`}: {signInService === SignInService.EMR ? 'admin' : 'patient'} <br />
-                            {t`Password`}: password
-                        </div>
-                    </div>
                     {Boolean(queryParams.error) && <div className={s.alert}>{queryParams.error_description}</div>}
                     <Button
                         type="primary"

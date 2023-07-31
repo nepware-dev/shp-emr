@@ -1,11 +1,12 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
-import { Button, Col, Row, Typography } from 'antd';
-import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
-import { isLoading } from 'fhir-react/lib/libs/remoteData';
+import { Button, Typography } from 'antd';
 import { Questionnaire } from 'fhir/r4b';
 import React, { useState } from 'react';
 import { GroupItemProps, QuestionItemProps } from 'sdc-qrf/lib/types';
+
+import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
+import { isLoading } from 'fhir-react/lib/libs/remoteData';
 
 import { BasePageContent, BasePageHeader } from 'src/components/BaseLayout';
 import { ModalTrigger } from 'src/components/ModalTrigger';
@@ -24,47 +25,43 @@ export function QuestionnaireBuilder() {
         useQuestionnaireBuilder();
     const [questionnaireItem, setQuestionnaireItem] = useState<QuestionItemProps | undefined>();
     const [groupItem, setGroupItem] = useState<GroupItemProps | undefined>();
-    //  console.log('questionnaireItem', questionnaireItem);
-    //  console.log('response', response);
 
     return (
         <>
             <BasePageHeader>
                 <div className={s.headerContainer}>
-                    <Row justify="space-between" align="middle" style={{ marginBottom: 40 }} gutter={[16, 16]}>
-                        <Col>
-                            <Title style={{ marginBottom: 0 }}>
-                                <Trans>Build your form</Trans>
-                            </Title>
-                        </Col>
-                        <Col>
-                            <RenderRemoteData remoteData={response}>
-                                {(questionnaire: Questionnaire) => {
-                                    return questionnaire.item ? (
-                                        <ModalTrigger
-                                            title={t`Save questionnaire`}
-                                            trigger={<Button type="primary">{t`Save questionnaire`}</Button>}
-                                        >
-                                            {({ closeModal }) => {
-                                                return (
-                                                    <QuestionnaireSaveForm
-                                                        questionnaire={questionnaire}
-                                                        onSave={onSaveQuestionnaire}
-                                                        onSuccess={closeModal}
-                                                    />
-                                                );
-                                            }}
-                                        </ModalTrigger>
-                                    ) : (
-                                        <React.Fragment />
-                                    );
-                                }}
-                            </RenderRemoteData>
-                        </Col>
-                    </Row>
+                    <Title style={{ fontSize: 24, marginBottom: 0 }}>
+                        <Trans>Build your form</Trans>
+                    </Title>
                 </div>
             </BasePageHeader>
             <BasePageContent className={s.container}>
+                <RenderRemoteData remoteData={response}>
+                    {(questionnaire: Questionnaire) => {
+                        return questionnaire.item ? (
+                            <ModalTrigger
+                                title={t`Save questionnaire`}
+                                trigger={
+                                    <Button type="primary" className={s.saveButton}>
+                                        {t`Save questionnaire`}
+                                    </Button>
+                                }
+                            >
+                                {({ closeModal }) => {
+                                    return (
+                                        <QuestionnaireSaveForm
+                                            questionnaire={questionnaire}
+                                            onSave={onSaveQuestionnaire}
+                                            onSuccess={closeModal}
+                                        />
+                                    );
+                                }}
+                            </ModalTrigger>
+                        ) : (
+                            <React.Fragment />
+                        );
+                    }}
+                </RenderRemoteData>
                 <div className={s.content}>
                     <div className={s.rightColumn}>
                         <Builder

@@ -1,20 +1,15 @@
 import { t } from '@lingui/macro';
-import { Menu } from 'antd';
 import Title from 'antd/es/typography/Title';
 import { Patient } from 'fhir/r4b';
 import _ from 'lodash';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
+import { useContext, useMemo, useState } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 
 import { renderHumanName } from 'shared/src/utils/fhir';
 
 import { BasePageHeader } from 'src/components/BaseLayout';
-import { RouteItem } from 'src/components/BaseLayout/Sidebar/SidebarTop';
-import Breadcrumbs from 'src/components/Breadcrumbs';
-import { matchCurrentUserRole, Role } from 'src/utils/role';
 
 import { BreadCrumb, PatientHeaderContext } from './context';
-import s from './PatientHeader.module.scss';
 
 export function PatientHeaderContextProvider(props: React.HTMLAttributes<HTMLDivElement> & { patient: Patient }) {
     const { children, patient } = props;
@@ -67,52 +62,11 @@ export function PatientHeaderContextProvider(props: React.HTMLAttributes<HTMLDiv
 }
 
 export function PatientHeader() {
-    const location = useLocation();
-    const params = useParams<{ id: string }>();
-    const { title, breadcrumbs } = useContext(PatientHeaderContext);
-
-    const menuItems: RouteItem[] = useMemo(
-        () => [
-            { label: t`Overview`, path: `/patients/${params.id}` },
-            { label: t`Encounters`, path: `/patients/${params.id}/encounters` },
-            { label: t`Documents`, path: `/patients/${params.id}/documents` },
-            { label: t`Wearables`, path: `/patients/${params.id}/wearables` },
-            { label: t`Resources`, path: `/patients/${params.id}/resources` },
-        ],
-        [params.id],
-    );
-
-    const [currentPath, setCurrentPath] = useState(location?.pathname);
-
-    useEffect(() => {
-        setCurrentPath(location?.pathname);
-    }, [location]);
-
-    const renderMenu = () => {
-        return (
-            <Menu
-                mode="horizontal"
-                theme="light"
-                selectedKeys={[currentPath.split('/').slice(0, 4).join('/')]}
-                className={s.menu}
-                items={menuItems.map((route) => ({
-                    key: route.path,
-                    label: <Link to={route.path}>{route.label}</Link>,
-                }))}
-            />
-        );
-    };
+    const { title } = useContext(PatientHeaderContext);
 
     return (
         <BasePageHeader style={{ paddingBottom: 0 }}>
-            <Breadcrumbs
-                crumbs={matchCurrentUserRole({
-                    [Role.Admin]: () => breadcrumbs,
-                    [Role.Patient]: () => breadcrumbs.slice(1),
-                })}
-            />
-            <Title style={{ marginBottom: 21 }}>{title}</Title>
-            {renderMenu()}
+            <Title style={{ fontSize: 24, marginBottom: 0 }}>{title}</Title>
         </BasePageHeader>
     );
 }

@@ -1,9 +1,10 @@
 import { Form } from 'antd';
 import { PickerProps } from 'antd/lib/date-picker/generatePicker';
-import { FHIRDateFormat, formatFHIRDate, formatFHIRDateTime } from 'fhir-react/lib/utils/date';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import { useCallback, useMemo } from 'react';
 import { QuestionItemProps } from 'sdc-qrf';
+
+import { FHIRDateFormat, formatFHIRDate, formatFHIRDateTime } from 'fhir-react/lib/utils/date';
 
 import { DatePicker } from 'src/components/DatePicker';
 
@@ -30,7 +31,7 @@ function DateTimePickerWrapper({ value, onChange, type, disabled }: DateTimePick
     const formatFunction = type === 'date' ? formatFHIRDate : formatFHIRDateTime;
 
     const newOnChange = useCallback(
-        (v: Moment | null, dateString: string) => {
+        (v: moment.Moment | null, dateString: string) => {
             if (v) {
                 v.toJSON = () => {
                     return formatFunction(v);

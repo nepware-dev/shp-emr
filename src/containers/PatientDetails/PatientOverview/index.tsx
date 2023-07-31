@@ -1,12 +1,13 @@
 import { CalendarOutlined, ContactsOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
 import { Button, notification } from 'antd';
-import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
-import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
-import { extractBundleResources, WithId } from 'fhir-react/lib/services/fhir';
 import { Appointment, Bundle, Patient } from 'fhir/r4b';
 import _ from 'lodash';
 import { Link, useLocation } from 'react-router-dom';
+
+import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
+import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
+import { extractBundleResources, WithId } from 'fhir-react/lib/services/fhir';
 
 import { Encounter } from 'shared/src/contrib/aidbox';
 import { inMemorySaveService, questionnaireIdLoader } from 'shared/src/hooks/questionnaire-response-form-data';
@@ -87,11 +88,11 @@ export function PatientOverview(props: PatientOverviewProps) {
                 {({ cards, appointments }) => {
                     const leftColCards = _.filter(
                         cards,
-                        (c: OverviewCard, index: number) => index % 2 === 0,
+                        (_: OverviewCard, index: number) => index % 2 === 0,
                     ) as OverviewCard[];
                     const rightColCards = _.filter(
                         cards,
-                        (c: OverviewCard, index: number) => index % 2 !== 0,
+                        (_: OverviewCard, index: number) => index % 2 !== 0,
                     ) as OverviewCard[];
 
                     return (
@@ -179,7 +180,7 @@ export function useStartEncounter(props: StartEncounterProps) {
         onSuccess: ({ extractedBundle }: { extractedBundle: Bundle<WithId<Encounter>>[] }) => {
             // NOTE: mapper extract resources in FCE format
             const encounter = extractBundleResources(extractedBundle[0]!).Encounter[0]!;
-            const patientId = encounter.subject?.id!;
+            const patientId = encounter?.subject?.id as string;
             navigateToEncounter(patientId, encounter.id);
             if (props.onClose) {
                 props.onClose();

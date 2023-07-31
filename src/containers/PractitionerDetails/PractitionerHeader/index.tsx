@@ -1,11 +1,12 @@
 import { t } from '@lingui/macro';
 import { Menu } from 'antd';
 import Title from 'antd/es/typography/Title';
-import { WithId } from 'fhir-react/lib/services/fhir';
 import { Practitioner, PractitionerRole } from 'fhir/r4b';
 import _ from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
+
+import { WithId } from 'fhir-react/lib/services/fhir';
 
 import { renderHumanName } from 'shared/src/utils/fhir';
 
@@ -97,10 +98,14 @@ export function PractitionerHeader(props: Props) {
     };
 
     return (
-        <BasePageHeader style={{ paddingBottom: 0 }}>
-            <Breadcrumbs crumbs={breadcrumbs} />
-            <Title style={{ marginBottom: 21 }}>{pageTitle}</Title>
-            {renderMenu()}
-        </BasePageHeader>
+        <>
+            <BasePageHeader>
+                <Title style={{ fontSize: 24, marginBottom: 0 }}>{pageTitle}</Title>
+            </BasePageHeader>
+            <div className={s.container}>
+                <Breadcrumbs crumbs={breadcrumbs} />
+                {renderMenu()}
+            </div>
+        </>
     );
 }

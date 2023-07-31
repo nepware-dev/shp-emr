@@ -1,6 +1,5 @@
 import { Layout } from 'antd';
 import classNames from 'classnames';
-import { useState } from 'react';
 
 import s from './Sidebar.module.scss';
 import { SidebarBottom } from './SidebarBottom';
@@ -8,10 +7,10 @@ import { SidebarTop } from './SidebarTop';
 
 const { Sider } = Layout;
 
-export function AppSidebar() {
-    const [collapsed, setCollapsed] = useState(true);
+export function AppSidebar(props: { collapsed: boolean; setCollapsed: (c: boolean) => void }) {
+    const { collapsed, setCollapsed } = props;
 
-    const collapsedWidth = 80;
+    const collapsedWidth = 100;
     const width = 248;
 
     return (
@@ -30,8 +29,8 @@ export function AppSidebar() {
                 trigger={null}
             >
                 <div className={s.sidebarContent}>
-                    <SidebarTop collapsed={collapsed} />
-                    <SidebarBottom collapsed={collapsed} toggleCollapsed={() => setCollapsed((v) => !v)} />
+                    <SidebarTop collapsed={collapsed} toggleCollapsed={() => setCollapsed(!collapsed)} />
+                    <SidebarBottom collapsed={collapsed} />
                 </div>
             </Sider>
         </div>

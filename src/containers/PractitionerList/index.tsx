@@ -1,10 +1,11 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
-import { Button, Col, Empty, notification, Row } from 'antd';
+import { Button, Empty, notification } from 'antd';
 import Title from 'antd/es/typography/Title';
-import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
 import { Practitioner } from 'fhir/r4b';
 import { useNavigate } from 'react-router-dom';
+
+import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
 
 import { questionnaireIdLoader } from 'shared/src/hooks/questionnaire-response-form-data';
 
@@ -37,48 +38,41 @@ export function PractitionerList() {
 
     return (
         <>
-            <BasePageHeader style={{ paddingTop: 40, paddingBottom: 92 }}>
-                <Row justify="space-between" align="middle" style={{ marginBottom: 40 }} gutter={[16, 16]}>
-                    <Col>
-                        <Title style={{ marginBottom: 0 }}>
-                            <Trans>Practitioners</Trans>
-                        </Title>
-                    </Col>
-                    <Col>
-                        <ModalTrigger
-                            title={t`Create practitioner`}
-                            trigger={
-                                <Button icon={<PlusOutlined />} type="primary">
-                                    <span>
-                                        <Trans>Add new practitioner</Trans>
-                                    </span>
-                                </Button>
-                            }
-                        >
-                            {({ closeModal }) => (
-                                <QuestionnaireResponseForm
-                                    questionnaireLoader={questionnaireIdLoader('practitioner-create')}
-                                    onSuccess={() => {
-                                        practitionerListReload();
-                                        closeModal();
-                                        notification.success({
-                                            message: t`Practitioner successfully created`,
-                                        });
-                                    }}
-                                    onCancel={closeModal}
-                                />
-                            )}
-                        </ModalTrigger>
-                    </Col>
-                </Row>
-
+            <BasePageHeader style={{ paddingTop: 16, paddingBottom: 16 }}>
+                <Title style={{ fontSize: 24, marginBottom: 0 }}>
+                    <Trans>Practitioners</Trans>
+                </Title>
+            </BasePageHeader>
+            <BasePageContent style={{ paddingTop: 88 }}>
                 <SearchBar
                     columnsFilterValues={columnsFilterValues}
                     onChangeColumnFilter={onChangeColumnFilter}
                     onResetFilters={onResetFilters}
                 />
-            </BasePageHeader>
-            <BasePageContent style={{ marginTop: '-55px', paddingTop: 0 }}>
+                <ModalTrigger
+                    title={t`Create practitioner`}
+                    trigger={
+                        <Button icon={<PlusOutlined />} type="primary" style={{ marginLeft: 'auto' }}>
+                            <span>
+                                <Trans>Add new practitioner</Trans>
+                            </span>
+                        </Button>
+                    }
+                >
+                    {({ closeModal }) => (
+                        <QuestionnaireResponseForm
+                            questionnaireLoader={questionnaireIdLoader('practitioner-create')}
+                            onSuccess={() => {
+                                practitionerListReload();
+                                closeModal();
+                                notification.success({
+                                    message: t`Practitioner successfully created`,
+                                });
+                            }}
+                            onCancel={closeModal}
+                        />
+                    )}
+                </ModalTrigger>
                 <Table
                     pagination={pagination}
                     onChange={handleTableChange}
