@@ -1,9 +1,10 @@
 import { t, Trans } from '@lingui/macro';
 import { Button, Empty, Row, Col, notification } from 'antd';
 import Title from 'antd/es/typography/Title';
-import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
 import { Patient } from 'fhir/r4b';
 import { useNavigate } from 'react-router-dom';
+
+import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
 
 import { questionnaireIdLoader } from 'shared/src/hooks/questionnaire-response-form-data';
 import { renderHumanName } from 'shared/src/utils/fhir';
@@ -40,25 +41,18 @@ export function PatientList() {
 
     return (
         <>
-            <BasePageHeader style={{ paddingTop: 40, paddingBottom: 92 }}>
-                <Row justify="space-between" align="middle" style={{ marginBottom: 40 }} gutter={[16, 16]}>
-                    <Col>
-                        <Title style={{ marginBottom: 0 }}>
-                            <Trans>Patients</Trans>
-                        </Title>
-                    </Col>
-                    <Col>
-                        <ModalNewPatient onCreate={pagerManager.reload} />
-                    </Col>
-                </Row>
-
+            <BasePageHeader style={{ paddingTop: 16, paddingBottom: 16 }}>
+                <Title style={{ fontSize: 24, marginBottom: 0 }}>
+                    <Trans>Patients</Trans>
+                </Title>
+            </BasePageHeader>
+            <BasePageContent style={{ paddingTop: 88 }}>
                 <SearchBar
                     columnsFilterValues={columnsFilterValues}
                     onChangeColumnFilter={onChangeColumnFilter}
                     onResetFilters={onResetFilters}
                 />
-            </BasePageHeader>
-            <BasePageContent style={{ marginTop: '-55px', paddingTop: 0 }}>
+                <ModalNewPatient onCreate={pagerManager.reload} triggerButtonStyle={{ marginLeft: 'auto' }} />
                 <Table<Patient>
                     pagination={pagination}
                     onChange={handleTableChange}

@@ -3,9 +3,10 @@ import { t, Trans } from '@lingui/macro';
 import { Button, Col, Empty, Row } from 'antd';
 import Title from 'antd/es/typography/Title';
 import { ColumnsType } from 'antd/lib/table';
-import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
 import { Questionnaire } from 'fhir/r4b';
 import { Link } from 'react-router-dom';
+
+import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
 
 import config from 'shared/src/config';
 
@@ -74,31 +75,24 @@ export function QuestionnaireList() {
 
     return (
         <>
-            <BasePageHeader style={{ paddingTop: 40, paddingBottom: 92 }}>
-                <Row justify="space-between" align="middle" style={{ marginBottom: 40 }} gutter={[16, 16]}>
-                    <Col>
-                        <Title style={{ marginBottom: 0 }}>
-                            <Trans>Questionnaires</Trans>
-                        </Title>
-                    </Col>
-                    <Col>
-                        <Link to="/questionnaires/builder">
-                            <Button icon={<PlusOutlined />} type="primary">
-                                <span>
-                                    <Trans>Add questionnaire</Trans>
-                                </span>
-                            </Button>
-                        </Link>
-                    </Col>
-                </Row>
-
+            <BasePageHeader style={{ paddingTop: 16, paddingBottom: 16 }}>
+                <Title style={{ fontSize: 24, marginBottom: 0 }}>
+                    <Trans>Questionnaires</Trans>
+                </Title>
+            </BasePageHeader>
+            <BasePageContent style={{ paddingTop: 88 }}>
                 <SearchBar
                     columnsFilterValues={columnsFilterValues}
                     onChangeColumnFilter={onChangeColumnFilter}
                     onResetFilters={onResetFilters}
                 />
-            </BasePageHeader>
-            <BasePageContent style={{ marginTop: '-55px', paddingTop: 0 }}>
+                <Link to="/questionnaires/builder" style={{ marginLeft: 'auto' }}>
+                    <Button icon={<PlusOutlined />} type="primary">
+                        <span>
+                            <Trans>Add questionnaire</Trans>
+                        </span>
+                    </Button>
+                </Link>
                 <Table<Questionnaire>
                     pagination={pagination}
                     onChange={handleTableChange}

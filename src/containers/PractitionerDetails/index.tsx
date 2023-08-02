@@ -1,17 +1,18 @@
+import { Practitioner, PractitionerRole } from 'fhir/r4b';
+import { Outlet, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+
 import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 import { useService } from 'fhir-react/lib/hooks/service';
 import { extractBundleResources, getFHIRResources, WithId } from 'fhir-react/lib/services/fhir';
 import { mapSuccess } from 'fhir-react/lib/services/service';
-import { Practitioner, PractitionerRole } from 'fhir/r4b';
-import { Outlet, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 
 import { BasePageContent } from 'src/components/BaseLayout';
 import { Spinner } from 'src/components/Spinner';
 
-import { Availability } from '../Scheduling/Availability';
-import { ScheduleCalendar } from '../Scheduling/ScheduleCalendar';
 import { PractitionerHeader } from './PractitionerHeader';
 import { PractitionerOverview } from './PractitionerOverview';
+import { Availability } from '../Scheduling/Availability';
+import { ScheduleCalendar } from '../Scheduling/ScheduleCalendar';
 
 export const PractitionerDetails = () => {
     const params = useParams<{ id: string }>();
@@ -39,8 +40,8 @@ export const PractitionerDetails = () => {
             {({ practitioner, practitionerRole }) => {
                 return (
                     <>
-                        <PractitionerHeader practitioner={practitioner} practitionerRole={practitionerRole} />
-                        <BasePageContent>
+                        <BasePageContent style={{ paddingTop: 88, backgroundColor: 'white' }}>
+                            <PractitionerHeader practitioner={practitioner} practitionerRole={practitionerRole} />
                             <Routes>
                                 <Route
                                     path="/"

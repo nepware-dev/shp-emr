@@ -12,9 +12,9 @@ export function StatusBadge(props: Props) {
     const { status } = props;
 
     const statusHumanTitle = {
-        'in-progress': t`in progress`,
-        finished: t`completed`,
-        completed: t`completed`,
+        'in-progress': t`In Progress`,
+        finished: t`Completed`,
+        completed: t`Completed`,
     };
 
     return (

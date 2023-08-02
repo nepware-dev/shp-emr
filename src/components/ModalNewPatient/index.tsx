@@ -9,14 +9,17 @@ import { QuestionnaireResponseForm } from '../QuestionnaireResponseForm';
 
 interface ModalNewPatientProps {
     onCreate: () => void;
+    triggerButtonStyle?: React.CSSProperties;
 }
 export const ModalNewPatient = (props: ModalNewPatientProps) => {
     return (
         <ModalTrigger
             title={t`Add patient`}
             trigger={
-                <Button icon={<PlusOutlined />} type="primary">
-                    <span><Trans>Add patient</Trans></span>
+                <Button icon={<PlusOutlined />} type="primary" style={props.triggerButtonStyle}>
+                    <span>
+                        <Trans>Add patient</Trans>
+                    </span>
                 </Button>
             }
         >
@@ -26,7 +29,7 @@ export const ModalNewPatient = (props: ModalNewPatientProps) => {
                     onSuccess={() => {
                         closeModal();
                         notification.success({ message: t`Patient successfully created` });
-                        props.onCreate()
+                        props.onCreate();
                     }}
                     onCancel={closeModal}
                 />

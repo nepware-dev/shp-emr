@@ -1,8 +1,9 @@
 import { t } from '@lingui/macro';
-import { Menu } from 'antd';
+import { Button, Menu } from 'antd';
 import classNames from 'classnames';
 import { Link, useLocation } from 'react-router-dom';
 
+import menuIcon from 'src/icons/general/menu.svg';
 import encountersIcon from 'src/icons/menu/encounters.svg';
 import patientsIcon from 'src/icons/menu/patients.svg';
 import practitionersIcon from 'src/icons/menu/practitioners.svg';
@@ -23,11 +24,12 @@ export interface RouteItem {
 
 interface Props {
     collapsed: boolean;
+    toggleCollapsed: () => void;
 }
 
 export function SidebarTop(props: Props) {
     const location = useLocation();
-    const { collapsed } = props;
+    const { collapsed, toggleCollapsed } = props;
 
     const menuItems: RouteItem[] = matchCurrentUserRole({
         [Role.Admin]: () => [
@@ -47,10 +49,18 @@ export function SidebarTop(props: Props) {
                 _collapsed: collapsed,
             })}
         >
-            <Link to="/" className={s.logoWrapper}>
-                <img src={logo} className={s.logoSmall} alt="" />
-                <img src={logo} className={s.logoCompanyName} alt="" />
-            </Link>
+            <div className={s.sidebarTopContent}>
+                <Button
+                    icon={<img src={menuIcon} alt="" />}
+                    className={s.collapseButton}
+                    type="default"
+                    onClick={toggleCollapsed}
+                />
+                <Link to="/" className={s.logoWrapper}>
+                    <img src={logo} className={s.logoSmall} alt="" />
+                    <img src={logo} className={s.logoCompanyName} alt="" />
+                </Link>
+            </div>
             <div className={s.divider} />
             <Menu
                 mode="inline"

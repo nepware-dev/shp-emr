@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 24px 8px;
     gap: 8px;
 }
 
@@ -36,9 +36,7 @@
         transition: opacity 0s;
 
         .container:global(._collapsed) & {
-            opacity: 0;
-            transition: opacity 0s;
-            visibility: hidden;
+            display: none;
         }
     }
 }
@@ -123,18 +121,9 @@
     }
 }
 
-.collapseButton {
-    margin-top: 4px;
-}
-
 .menuItemLabel {
     opacity: 1;
     transition: opacity 0.2s;
-
-    .container:global(._collapsed) & {
-        opacity: 0;
-        transition: opacity 0s;
-    }
 }
 
 :global .ant-menu-submenu-arrow {
@@ -144,5 +133,45 @@
     .container:global(._collapsed) & {
         opacity: 0;
         transition: opacity 0s;
+    }
+}
+
+.logoutLink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    border-radius: 8px;
+
+    &:hover {
+        background-color: var(--color-text-50);
+    }
+
+    .container:global(._collapsed) & {
+        justify-content: center;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    .logoutIcon {
+        height: 32px;
+        width: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        .container:global(._collapsed) & {
+            width: unset;
+            height: unset;
+        }
+    }
+
+    .logoutLabel {
+        font-size: 0.875rem;
+        font-weight: 500;
     }
 }

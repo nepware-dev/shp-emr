@@ -98,18 +98,17 @@ export function EncounterList() {
 
     return (
         <>
-            <BasePageHeader style={{ paddingTop: 40, paddingBottom: 92 }}>
-                <Title style={{ marginBottom: 40 }}>
+            <BasePageHeader style={{ paddingTop: 16, paddingBottom: 16 }}>
+                <Title style={{ fontSize: 24, marginBottom: 0 }}>
                     <Trans>Encounters</Trans>
                 </Title>
-
+            </BasePageHeader>
+            <BasePageContent style={{ paddingTop: 88 }}>
                 <SearchBar
                     columnsFilterValues={columnsFilterValues}
                     onChangeColumnFilter={onChangeColumnFilter}
                     onResetFilters={onResetFilters}
                 />
-            </BasePageHeader>
-            <BasePageContent style={{ marginTop: '-55px', paddingTop: 0 }}>
                 <EncountersTable
                     columns={columns}
                     remoteData={encounterDataListRD}
