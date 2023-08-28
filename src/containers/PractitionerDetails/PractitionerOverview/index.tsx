@@ -1,8 +1,9 @@
 import { ContactsOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
 import { Button, notification } from 'antd';
-import { WithId } from 'fhir-react/lib/services/fhir';
 import { Practitioner, PractitionerRole } from 'fhir/r4b';
+
+import { WithId } from 'fhir-react/lib/services/fhir';
 
 import { questionnaireIdLoader } from 'shared/src/hooks/questionnaire-response-form-data';
 
@@ -21,7 +22,7 @@ interface Props {
 function usePractitionerOverview(props: Props) {
     const { practitioner, practitionerRole } = props;
 
-    let details = [
+    const details = [
         {
             title: 'First name',
             value: practitioner.name?.[0]?.given?.[0],

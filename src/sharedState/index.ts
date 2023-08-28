@@ -1,6 +1,7 @@
+import { Patient, Practitioner } from 'fhir/r4b';
+
 import { createSharedState } from 'fhir-react/lib/hooks/shared-state';
 import { WithId } from 'fhir-react/lib/services/fhir';
-import { Patient, Practitioner } from 'fhir/r4b';
 
 import { User } from 'shared/src/contrib/aidbox';
 

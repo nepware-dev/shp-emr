@@ -71,7 +71,7 @@ export function EncounterList() {
             title: <Trans>Actions</Trans>,
             dataIndex: 'actions',
             key: 'action',
-            width: 180,
+            width: '10%',
             render: (_text: any, resource: EncounterData) => (
                 <Row wrap={false}>
                     <Col>
@@ -82,6 +82,7 @@ export function EncounterList() {
                             <Trans>Open</Trans>
                         </Link>
                     </Col>
+                    {/*
                     <Col>
                         <Link
                             to={`/encounters/${resource.id}/video`}
@@ -91,6 +92,7 @@ export function EncounterList() {
                             <Trans>Video call</Trans>
                         </Link>
                     </Col>
+                     */}
                 </Row>
             ),
         },

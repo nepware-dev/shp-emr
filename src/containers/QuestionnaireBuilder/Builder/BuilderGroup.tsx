@@ -3,9 +3,9 @@ import { Button } from 'antd';
 import classNames from 'classnames';
 import { GroupItemProps } from 'sdc-qrf';
 
-import { OnItemDrag } from '../hooks';
 import s from './Builder.module.scss';
 import { FieldSource, FieldTarget } from './DragAndDrop';
+import { OnItemDrag } from '../hooks';
 
 interface Props {
     children: React.ReactNode;

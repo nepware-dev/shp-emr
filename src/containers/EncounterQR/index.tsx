@@ -1,23 +1,24 @@
 import { t } from '@lingui/macro';
 import { Alert, notification } from 'antd';
 import Title from 'antd/es/typography/Title';
+import { Questionnaire } from 'fhir/r4b';
+import { useParams } from 'react-router-dom';
+
 import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 import { useService } from 'fhir-react/lib/hooks/service';
 import { getFHIRResource } from 'fhir-react/lib/services/fhir';
 import { sequenceMap } from 'fhir-react/lib/services/service';
-import { Questionnaire } from 'fhir/r4b';
-import { useParams } from 'react-router-dom';
 
 import { questionnaireIdLoader } from 'shared/src/hooks/questionnaire-response-form-data';
 import { renderHumanName } from 'shared/src/utils/fhir';
 
 import { Spinner } from 'src/components/Spinner';
 
+import s from './EncounterQR.module.scss';
 import { BasePageContent, BasePageHeader } from '../../components/BaseLayout';
 import { QuestionnaireResponseForm } from '../../components/QuestionnaireResponseForm';
 import { formatHumanDate } from '../../utils/date';
 import { useEncounterDetails } from '../EncounterDetails/hooks';
-import s from './EncounterQR.module.scss';
 
 export function EncounterQR() {
     const { encounterId, questionnaireId } = useParams<{

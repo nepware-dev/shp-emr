@@ -1,10 +1,3 @@
-import { isSuccess, success } from 'fhir-react/lib/libs/remoteData';
-import { getFHIRResource } from 'fhir-react/lib/services/fhir';
-import {
-    resetInstanceToken as resetFHIRInstanceToken,
-    setInstanceToken as setFHIRInstanceToken,
-} from 'fhir-react/lib/services/instance';
-import { extractErrorCode, formatError } from 'fhir-react/lib/utils/error';
 import { Patient, Practitioner } from 'fhir/r4b';
 
 import * as aidboxReactRemoteData from 'aidbox-react/lib/libs/remoteData';
@@ -12,6 +5,15 @@ import {
     resetInstanceToken as resetAidboxInstanceToken,
     setInstanceToken as setAidboxInstanceToken,
 } from 'aidbox-react/lib/services/instance';
+
+import { isSuccess, success } from 'fhir-react/lib/libs/remoteData';
+import { getFHIRResource } from 'fhir-react/lib/services/fhir';
+import {
+    resetInstanceToken as resetFHIRInstanceToken,
+    setInstanceToken as setFHIRInstanceToken,
+} from 'fhir-react/lib/services/instance';
+import { extractErrorCode, formatError } from 'fhir-react/lib/utils/error';
+
 
 import { User } from 'shared/src/contrib/aidbox';
 

@@ -11,9 +11,9 @@ function getColorVariable(colorVariable: string) {
 }
 
 const brandColors = {
-    primary: (getColorVariable('--color-primary') || ANTDColors.blue.primary) as string,
-    secondary: (getColorVariable('--color-secondary') || ANTDColors.red.primary) as string,
-    background: (getColorVariable('--color-background') || ANTDColors.blue[0]) as string,
+    primary: getColorVariable('--color-primary') as string || '#0170B9',
+    secondary: getColorVariable('--color-secondary') as string || '#CF2E2E',
+    background: getColorVariable('--color-background') as string || '#FAFCFF',
 };
 
 const semanticColors = {

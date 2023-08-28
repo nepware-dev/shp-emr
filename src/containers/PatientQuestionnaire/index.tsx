@@ -1,15 +1,16 @@
 import { Trans } from '@lingui/macro';
 import Title from 'antd/lib/typography/Title';
-import { WithId } from 'fhir-react';
-import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
-import { useService } from 'fhir-react/lib/hooks/service';
-import { getFHIRResource } from 'fhir-react/lib/services/fhir';
-import { axiosInstance as axiosFHIRInstance } from 'fhir-react/lib/services/instance';
 import { Patient } from 'fhir/r4b';
+import { WithId } from 'fhir-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { axiosInstance as axiosAidboxInstance } from 'aidbox-react/lib/services/instance';
+
+import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
+import { useService } from 'fhir-react/lib/hooks/service';
+import { getFHIRResource } from 'fhir-react/lib/services/fhir';
+import { axiosInstance as axiosFHIRInstance } from 'fhir-react/lib/services/instance';
 
 import { BasePageContent, BasePageHeader } from 'src/components/BaseLayout';
 import { Spinner } from 'src/components/Spinner';
@@ -75,13 +76,13 @@ export function PatientQuestionnaire() {
 
     return (
         <>
-            <BasePageHeader>
-                <Title>
+            <BasePageHeader style={{ paddingTop: 16, paddingBottom: 16 }}>
+                <Title style={{ fontSize: 24, marginBottom: 0 }}>
                     <Trans>Questionnaire</Trans>
                 </Title>
             </BasePageHeader>
 
-            <BasePageContent style={{ alignItems: 'center' }}>
+            <BasePageContent style={{ paddingTop: 88, alignItems: 'center' }}>
                 {isLoading ? (
                     <Spinner />
                 ) : (

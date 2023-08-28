@@ -1,6 +1,7 @@
+import { Questionnaire } from 'fhir/r4b';
+
 import { extractBundleResources } from 'fhir-react/lib/services/fhir';
 import { mapSuccess } from 'fhir-react/lib/services/service';
-import { Questionnaire } from 'fhir/r4b';
 
 import { StringTypeColumnFilterValue } from 'src/components/SearchBar/types';
 import { usePagerExtended } from 'src/hooks/pager';

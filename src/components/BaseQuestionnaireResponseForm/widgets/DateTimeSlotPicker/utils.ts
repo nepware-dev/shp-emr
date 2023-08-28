@@ -1,4 +1,3 @@
-import { FHIRDateFormat, formatFHIRDateTime, parseFHIRDateTime } from 'fhir-react/lib/utils/date';
 import {
     Appointment,
     PractitionerRole,
@@ -6,6 +5,8 @@ import {
 } from 'fhir/r4b';
 import _ from 'lodash';
 import moment from 'moment';
+
+import { FHIRDateFormat, formatFHIRDateTime, parseFHIRDateTime } from 'fhir-react/lib/utils/date';
 
 import { days } from 'src/containers/Scheduling/available-time';
 
@@ -16,9 +17,9 @@ function praseSlotDuration(slotDuration: string) {
 }
 
 function getPeriodTimeSlots(start: moment.Moment, end: moment.Moment, slotDuration: string) {
-    let startTime = start;
-    let endTime = end;
-    let timeStops: string[] = [];
+    const startTime = start;
+    const endTime = end;
+    const timeStops: string[] = [];
     const { hours, minutes, seconds } = praseSlotDuration(slotDuration);
 
     while (startTime.isBefore(endTime)) {
@@ -35,7 +36,7 @@ export function getAllTimeSlots(
 ) {
     // TODO: use number of weeks from settings or limited to maxDate
     const weeks = [0, 1, 2];
-    let timeSlots: string[][] = [];
+    const timeSlots: string[][] = [];
 
     availableTime.forEach((availableTime) => {
         const { daysOfWeek, availableStartTime, availableEndTime } = availableTime;

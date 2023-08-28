@@ -1,7 +1,8 @@
 
-import { service } from 'fhir-react/lib/services/service';
 import { Resource, Bundle, Reference } from 'fhir/r4b';
 import { createBrowserHistory } from 'history';
+
+import { service } from 'fhir-react/lib/services/service';
 
 export const history = createBrowserHistory();
 

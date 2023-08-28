@@ -3,9 +3,9 @@ import { useContext } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { GroupItemProps, QuestionItemProps } from 'sdc-qrf';
 
+import s from './Builder.module.scss';
 import { FieldSourceContext } from '../context';
 import { OnItemDrag } from '../hooks';
-import s from './Builder.module.scss';
 
 interface FieldSourceProps {
     children: React.ReactNode;

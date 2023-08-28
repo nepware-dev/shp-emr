@@ -1,11 +1,12 @@
 import { readdirSync } from 'fs';
 import { parse as parsePath } from 'path';
 
-import { getFHIRResource } from 'fhir-react/lib/services/fhir';
 import { Questionnaire as FHIRQuestionnaire } from 'fhir/r4b';
 
 import { getFHIRResource as getFCEResource } from 'aidbox-react/lib/services/fhir';
 import { ensure } from 'aidbox-react/lib/utils/tests';
+
+import { getFHIRResource } from 'fhir-react/lib/services/fhir';
 
 import { Questionnaire as FCEQuestionnaire } from 'shared/src/contrib/aidbox';
 import { toFirstClassExtension, fromFirstClassExtension } from 'shared/src/utils/converter';

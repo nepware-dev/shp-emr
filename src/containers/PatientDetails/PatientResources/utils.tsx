@@ -1,16 +1,18 @@
 import { t } from '@lingui/macro';
-import { WithId } from 'fhir-react/lib/services/fhir';
 import {
     AllergyIntolerance,
     Condition,
     Consent,
     Immunization,
     MedicationStatement,
+    Observation,
     Patient,
     Provenance,
     Resource,
 } from 'fhir/r4b';
 import { Link, useLocation } from 'react-router-dom';
+
+import { WithId } from 'fhir-react/lib/services/fhir';
 
 import { extractExtension, fromFHIRReference } from 'shared/src/utils/converter';
 
@@ -220,6 +222,68 @@ export function getOptions(patient: WithId<Patient>): Option[] {
                 },
             ],
         },
+        {
+            value: 'observations',
+            label: 'Observations',
+            renderTable: (option: Option) => (
+                <ResourceTable<Observation>
+                    key={`resource-table-${option.value}`}
+                    resourceType="Observation"
+                    params={{
+                        patient: patient.id,
+                        status: 'final',
+                        _sort: ['-_lastUpdated'],
+                        _revinclude: ['Provenance:target'],
+                    }}
+                    option={option}
+                 />
+            ),
+            getTableColumns: (provenanceList: Provenance[] = []) => [
+                {
+                    title: t`Title`,
+                    key: 'title',
+                    render: (resource: Observation) => (
+                        <LinkToEdit name={resource.code?.coding?.[0]?.display} resource={resource} provenanceList={provenanceList} />
+                    ),
+                    width: 200,
+                },
+                {
+                    title: t`Date`,
+                    key: 'date',
+                    render: (r: Observation) => {
+                        return r.issued ? formatHumanDate(r.issued) : null;
+                    },
+                    width: 200,
+                },
+                {
+                    title: t`Value`,
+                    key: 'actor',
+                    render: (r: Observation) => {
+                        if(r.valueQuantity) {
+                            return `${r.valueQuantity.value} ${r.valueQuantity.unit}`;
+                        } else if (r.component) {
+                            return (
+                                <>
+                                    {r.component.map((c) => [
+                                        ...[c.code.coding?.[0]?.display],
+                                        ...[`${c.valueQuantity?.value} ${c.valueQuantity?.unit}`]
+                                    ].join(': '),
+                                    ).map((v) => (
+                                        <div key={v}>{v}</div>
+                                    ))}
+                                </>
+                            )
+                        } else if (r.valueCodeableConcept) {
+                            return (
+                                r.valueCodeableConcept.text || r.valueCodeableConcept.coding?.[0]?.display
+                            );
+                        }
+                        return null;
+                    },
+                    width: 200,
+                },
+            ]
+        }
     ];
 }
 

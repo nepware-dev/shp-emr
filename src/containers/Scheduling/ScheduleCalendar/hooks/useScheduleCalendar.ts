@@ -1,4 +1,8 @@
 
+import { Appointment, Patient, PractitionerRole } from 'fhir/r4b';
+import moment from 'moment';
+import React from 'react';
+
 import { useService } from 'fhir-react/lib/hooks/service';
 import {
     extractBundleResources,
@@ -8,9 +12,6 @@ import {
     getReference,
 } from 'fhir-react/lib/services/fhir';
 import { mapSuccess, sequenceMap } from 'fhir-react/lib/services/service';
-import { Appointment, Patient, PractitionerRole } from 'fhir/r4b';
-import moment from 'moment';
-import React from 'react';
 
 import { extractAppointmentPatient } from 'shared/src/utils/appointment';
 import { formatFHIRDateTime } from 'shared/src/utils/date';

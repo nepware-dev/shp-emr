@@ -1,8 +1,3 @@
-import { useService } from 'fhir-react/lib/hooks/service';
-import { isFailure, isSuccess, RemoteDataResult, success } from 'fhir-react/lib/libs/remoteData';
-import { getReference, saveFHIRResource } from 'fhir-react/lib/services/fhir';
-import { mapSuccess, service } from 'fhir-react/lib/services/service';
-import { formatFHIRDateTime } from 'fhir-react/lib/utils/date';
 import {
     QuestionnaireResponse as FHIRQuestionnaireResponse,
     Patient,
@@ -18,6 +13,12 @@ import {
     calcInitialContext,
     removeDisabledAnswers,
 } from 'sdc-qrf';
+
+import { useService } from 'fhir-react/lib/hooks/service';
+import { isFailure, isSuccess, RemoteDataResult, success } from 'fhir-react/lib/libs/remoteData';
+import { getReference, saveFHIRResource } from 'fhir-react/lib/services/fhir';
+import { mapSuccess, service } from 'fhir-react/lib/services/service';
+import { formatFHIRDateTime } from 'fhir-react/lib/utils/date';
 
 import {
     QuestionnaireResponse as FCEQuestionnaireResponse,
@@ -137,7 +138,7 @@ export async function loadQuestionnaireResponseFormData(props: QuestionnaireResp
         if (questionnaireLoader.type === 'id') {
             return service<FHIRQuestionnaire>({
                 method: 'GET',
-                url: `/Questionnaire/${questionnaireLoader.questionnaireId}/$assemble`,
+                url: `/Questionnaire/${questionnaireLoader.questionnaireId}`,
             });
         }
 
@@ -199,23 +200,24 @@ export async function handleFormDataSave(
     };
     const finalFHIRQuestionnaireResponse: FHIRQuestionnaireResponse =
         fromFirstClassExtension(finalFCEQuestionnaireResponse);
+
     const fhirQuestionnaire: FHIRQuestionnaire = fromFirstClassExtension(questionnaire);
 
-    const constraintRemoteData = await service({
-        url: '/QuestionnaireResponse/$constraint-check',
-        method: 'POST',
-        data: {
-            resourceType: 'Parameters',
-            parameter: [
-                { name: 'Questionnaire', resource: fhirQuestionnaire },
-                { name: 'QuestionnaireResponse', resource: finalFHIRQuestionnaireResponse },
-                ...(launchContextParameters || []),
-            ],
-        },
-    });
-    if (isFailure(constraintRemoteData)) {
-        return constraintRemoteData;
-    }
+    // const constraintRemoteData = await service({
+    //     url: '/QuestionnaireResponse/$constraint-check',
+    //     method: 'POST',
+    //     data: {
+    //         resourceType: 'Parameters',
+    //         parameter: [
+    //             { name: 'Questionnaire', resource: fhirQuestionnaire },
+    //             { name: 'QuestionnaireResponse', resource: finalFHIRQuestionnaireResponse },
+    //             ...(launchContextParameters || []),
+    //         ],
+    //     },
+    // });
+    // if (isFailure(constraintRemoteData)) {
+    //     return constraintRemoteData;
+    // }
 
     const saveQRRemoteData = await questionnaireResponseSaveService(finalFHIRQuestionnaireResponse);
     if (isFailure(saveQRRemoteData)) {
@@ -224,7 +226,7 @@ export async function handleFormDataSave(
 
     const extractRemoteData = await service<any>({
         method: 'POST',
-        url: '/Questionnaire/$extract',
+        url: '/QuestionnaireResponse/$extract',
         data: {
             resourceType: 'Parameters',
             parameter: [

@@ -1,8 +1,4 @@
 import { notification } from 'antd';
-import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
-import { isFailure, isSuccess, RemoteDataResult } from 'fhir-react/lib/libs/remoteData';
-import { saveFHIRResource, updateFHIRResource } from 'fhir-react/lib/services/fhir';
-import { formatError } from 'fhir-react/lib/utils/error';
 import { QuestionnaireResponse } from 'fhir/r4b';
 import _ from 'lodash';
 import { useMemo } from 'react';
@@ -12,6 +8,11 @@ import {
     ItemControlQuestionItemComponentMapping,
     mapFormToResponse,
 } from 'sdc-qrf';
+
+import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
+import { isFailure, isSuccess, RemoteDataResult } from 'fhir-react/lib/libs/remoteData';
+import { saveFHIRResource, updateFHIRResource } from 'fhir-react/lib/services/fhir';
+import { formatError } from 'fhir-react/lib/utils/error';
 
 import {
     QuestionnaireResponseFormData,
@@ -107,8 +108,8 @@ export function useQuestionnaireResponseForm(props: Props) {
     const memoizedProps = useMemo(() => props, [JSON.stringify(props)]);
 
     const { response, handleSave } = useQuestionnaireResponseFormData(memoizedProps);
-    const { onSuccess, onFailure, readOnly, initialQuestionnaireResponse, onCancel } = memoizedProps;
 
+    const { onSuccess, onFailure, readOnly, initialQuestionnaireResponse, onCancel } = memoizedProps;
 
     const onSubmit = async (formData: QuestionnaireResponseFormData) => {
         const modifiedFormData = _.merge({}, formData, {

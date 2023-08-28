@@ -6,8 +6,9 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { t, Trans } from '@lingui/macro';
 import { notification } from 'antd';
 import Title from 'antd/es/typography/Title';
-import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 import { PractitionerRole } from 'fhir/r4b';
+
+import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 
 import { AppointmentDetailsModal } from './components/AppointmentDetailsModal';
 import { EditAppointmentModal } from './components/EditAppointmentModal';

@@ -2,8 +2,7 @@ import { Form, InputNumber, InputNumberProps } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { GroupItemProps } from 'sdc-qrf';
 
-import { Coding } from 'shared/src/contrib/aidbox';
-import { QuestionnaireItem } from 'shared/src/contrib/aidbox';
+import { Coding , QuestionnaireItem } from 'shared/src/contrib/aidbox';
 
 import { useFieldController } from 'src/components/BaseQuestionnaireResponseForm/hooks';
 
