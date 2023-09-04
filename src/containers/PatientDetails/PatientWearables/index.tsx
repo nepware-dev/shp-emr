@@ -1,10 +1,11 @@
 import { t } from '@lingui/macro';
 import { Empty, Result } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { Patient } from 'fhir/r4b';
 import { WithId } from 'fhir-react';
+
 import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
-import { Patient } from 'fhir/r4b';
 
 import { SpinIndicator } from 'src/components/Spinner';
 import { Table } from 'src/components/Table';

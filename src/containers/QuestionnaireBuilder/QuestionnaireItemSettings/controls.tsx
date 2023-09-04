@@ -1,19 +1,21 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Trans, t } from '@lingui/macro';
 import { Button, Checkbox, Empty, Form, Input } from 'antd';
-import { parseFHIRTime } from 'fhir-react';
-import { useService } from 'fhir-react/lib/hooks/service';
-import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
-import { WithId, extractBundleResources, getFHIRResources } from 'fhir-react/lib/services/fhir';
-import { mapSuccess } from 'fhir-react/lib/services/service';
-import { formatFHIRDate, formatFHIRTime, parseFHIRDate } from 'fhir-react/lib/utils/date';
 import { Coding, ValueSet } from 'fhir/r4b';
+import { parseFHIRTime } from 'fhir-react';
 import _ from 'lodash';
 import { useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import AsyncSelect from 'react-select/async';
 
 import { service } from 'aidbox-react/lib/services/service';
+
+import { useService } from 'fhir-react/lib/hooks/service';
+import { isLoading, isSuccess } from 'fhir-react/lib/libs/remoteData';
+import { WithId, extractBundleResources, getFHIRResources } from 'fhir-react/lib/services/fhir';
+import { mapSuccess } from 'fhir-react/lib/services/service';
+import { formatFHIRDate, formatFHIRTime, parseFHIRDate } from 'fhir-react/lib/utils/date';
+
 
 import { QuestionnaireItemAnswerOption } from 'shared/src/contrib/aidbox';
 import { humanDate, humanTime } from 'shared/src/utils/date';
@@ -348,7 +350,7 @@ export function useValueSetField() {
         });
 
         if (isSuccess(response)) {
-            let valueSetMap = {};
+            const valueSetMap = {};
             response.data.forEach((v) => (valueSetMap[`ValueSet/${v.id}`] = v));
             setOptionsData(valueSetMap);
             return response.data || [];

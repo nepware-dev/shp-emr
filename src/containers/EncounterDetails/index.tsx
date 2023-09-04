@@ -2,15 +2,16 @@ import { CheckOutlined, PlusOutlined } from '@ant-design/icons';
 import { t, Trans } from '@lingui/macro';
 import { Button, notification } from 'antd';
 import Title from 'antd/es/typography/Title';
+import { Encounter, Patient } from 'fhir/r4b';
+import { useCallback, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 import { useService } from 'fhir-react/lib/hooks/service';
 import { isSuccess } from 'fhir-react/lib/libs/remoteData';
 import { getFHIRResource, saveFHIRResource } from 'fhir-react/lib/services/fhir';
 import { formatFHIRDateTime } from 'fhir-react/lib/utils/date';
 import { formatError } from 'fhir-react/lib/utils/error';
-import { Encounter, Patient } from 'fhir/r4b';
-import { useCallback, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import { Spinner } from 'src/components/Spinner';
 import { DocumentsList } from 'src/containers/DocumentsList';

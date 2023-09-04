@@ -4,13 +4,6 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-import { createFHIRResource, getReference, saveFHIRResource } from 'fhir-react/lib/services/fhir';
-import {
-    resetInstanceToken as resetFHIRInstanceToken,
-    setInstanceBaseURL as setFHIRInstanceBaseURL,
-    setInstanceToken as setFHIRInstanceToken,
-} from 'fhir-react/lib/services/instance';
-import { ensure } from 'fhir-react/lib/utils/tests';
 import { Encounter, Patient, Practitioner, PractitionerRole, Reference, Resource } from 'fhir/r4b';
 
 import { saveFHIRResource as aidboxSaveFHIRResource } from 'aidbox-react/lib/services/fhir';
@@ -22,6 +15,14 @@ import {
 } from 'aidbox-react/lib/services/instance';
 import { formatFHIRDateTime } from 'aidbox-react/lib/utils/date';
 import { withRootAccess, LoginService, getToken } from 'aidbox-react/lib/utils/tests';
+
+import { createFHIRResource, getReference, saveFHIRResource } from 'fhir-react/lib/services/fhir';
+import {
+    resetInstanceToken as resetFHIRInstanceToken,
+    setInstanceBaseURL as setFHIRInstanceBaseURL,
+    setInstanceToken as setFHIRInstanceToken,
+} from 'fhir-react/lib/services/instance';
+import { ensure } from 'fhir-react/lib/utils/tests';
 
 import { User } from 'shared/src/contrib/aidbox';
 

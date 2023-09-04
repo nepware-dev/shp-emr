@@ -1,9 +1,11 @@
+import { t } from '@lingui/macro';
+import { Reference, Patient, Questionnaire, QuestionnaireResponse } from 'fhir/r4b';
+
 import { useService } from 'fhir-react/lib/hooks/service';
 import { isSuccess } from 'fhir-react/lib/libs/remoteData';
 import { extractBundleResources, getFHIRResources } from 'fhir-react/lib/services/fhir';
 import { mapSuccess } from 'fhir-react/lib/services/service';
 import { parseFHIRReference } from 'fhir-react/lib/utils/fhir';
-import { Reference, Patient, Questionnaire, QuestionnaireResponse } from 'fhir/r4b';
 
 export function usePatientDocuments(patient: Patient, encounter?: Reference) {
     const [response] = useService(async () => {
@@ -27,10 +29,23 @@ export function usePatientDocuments(patient: Patient, encounter?: Reference) {
             });
 
             return mapSuccess(qResponse, (bundle) => {
-                let questionnaireNames: { [key: string]: string | undefined } = {};
+                const questionnaireNames: { [key: string]: string } = {};
+                const questionnaireNameById: { [key: string]: string } = {};
                 extractBundleResources(bundle).Questionnaire.forEach(
-                    (q) => (questionnaireNames[q.id!] = q.title || q.name),
+                    (q) => (questionnaireNameById[q.id!] = q.title || q.name || t`Unknown`),
                 );
+
+                qrResponseExtracted.data.QuestionnaireResponse.forEach((qr) => {
+                    const remoteName = questionnaireNameById[qr.questionnaire!];
+                    if(remoteName) {
+                        questionnaireNames[qr.id!] = remoteName;
+                    } else {
+                        const e = qr._questionnaire?.extension?.find(({url}) => url === 'http://hl7.org/fhir/StructureDefinition/display');
+                        if(e) {
+                            questionnaireNames[qr.id!] = e.valueString ?? t`Unknown`;
+                        }
+                    }
+                });
 
                 return {
                     ...qrResponseExtracted.data,

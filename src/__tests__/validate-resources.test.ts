@@ -1,10 +1,11 @@
 import { readdirSync } from 'fs';
 import { parse as parsePath } from 'path';
 
+import { OperationOutcome, Questionnaire } from 'fhir/r4b';
+
 import { getFHIRResource } from 'fhir-react/lib/services/fhir';
 import { service } from 'fhir-react/lib/services/service';
 import { ensure } from 'fhir-react/lib/utils/tests';
-import { OperationOutcome, Questionnaire } from 'fhir/r4b';
 
 import { loginAdminUser } from 'src/setupTests';
 

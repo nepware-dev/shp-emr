@@ -29,9 +29,9 @@ export function VideoCall() {
     return (
         <>
             <BasePageHeader style={{ paddingBottom: 0 }}>
-                <Row justify="space-between" align="middle" style={{ marginBottom: 40 }}>
+                <Row justify="space-between" align="middle">
                     <Col>
-                        <Title style={{ marginBottom: 0 }}>Video call</Title>
+                        <Title style={{ fontSize: 24, marginBottom: 0 }}>Video call</Title>
                     </Col>
                 </Row>
             </BasePageHeader>

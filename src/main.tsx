@@ -10,7 +10,6 @@ import { dynamicActivate, getCurrentLocale } from 'shared/src/services/i18n';
 
 import 'antd/dist/reset.css';
 import 'src/styles/index.scss';
-import 'shared/src/services/i18n';
 
 import { App } from 'src/containers/App';
 

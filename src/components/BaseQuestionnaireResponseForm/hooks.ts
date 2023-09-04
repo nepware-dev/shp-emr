@@ -27,7 +27,7 @@ export function useFieldController(fieldName: any, questionItem: QuestionnaireIt
     const onMultiChange = useCallback(
         (option: any) => {
             if (repeats) {
-                let arrayValue = (field.value ?? []) as any[];
+                const arrayValue = (field.value ?? []) as any[];
                 const valueIndex = arrayValue.findIndex((v) => _.isEqual(v?.value, option.value));
 
                 if (valueIndex === -1) {

@@ -1,5 +1,5 @@
-import moment from 'moment';
 import { act, renderHook } from '@testing-library/react';
+import moment from 'moment';
 
 import { useSearchBar } from '../hooks';
 

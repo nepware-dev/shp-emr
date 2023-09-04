@@ -1,9 +1,9 @@
+import { Consent, Patient, Practitioner } from 'fhir/r4b';
+
 import { useService } from 'fhir-react/lib/hooks/service';
 import { failure, isFailure, success } from 'fhir-react/lib/libs/remoteData';
-import { WithId, getFHIRResources } from 'fhir-react/lib/services/fhir';
-import { extractBundleResources } from 'fhir-react/lib/services/fhir';
+import { WithId, getFHIRResources , extractBundleResources } from 'fhir-react/lib/services/fhir';
 import { mapSuccess } from 'fhir-react/lib/services/service';
-import { Consent, Patient, Practitioner } from 'fhir/r4b';
 
 import config from 'shared/src/config';
 

@@ -1,11 +1,12 @@
 import { Trans } from '@lingui/macro';
 import { Button } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { isLoading, isSuccess, RemoteData } from 'fhir-react/lib/libs/remoteData';
-import { WithId } from 'fhir-react/lib/services/fhir';
 import { Encounter, Patient, QuestionnaireResponse } from 'fhir/r4b';
 import { useMemo } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+import { isLoading, isSuccess, RemoteData } from 'fhir-react/lib/libs/remoteData';
+import { WithId } from 'fhir-react/lib/services/fhir';
 
 import { Empty } from 'src/components/Empty';
 import { StatusBadge } from 'src/components/EncounterStatusBadge';

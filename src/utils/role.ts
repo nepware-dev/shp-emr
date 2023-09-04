@@ -1,5 +1,5 @@
-import { WithId } from 'fhir-react';
 import { Patient as PatientResource, Practitioner } from 'fhir/r4b';
+import { WithId } from 'fhir-react';
 
 import { User } from 'shared/src/contrib/aidbox';
 

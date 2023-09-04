@@ -1,12 +1,13 @@
 import { TablePaginationConfig } from 'antd';
+import { Encounter, Patient, Practitioner, PractitionerRole } from 'fhir/r4b';
+import { useMemo } from 'react';
+
 import { RemoteData } from 'fhir-react/lib/libs/remoteData';
 import { extractBundleResources } from 'fhir-react/lib/services/fhir';
 import { SearchParams } from 'fhir-react/lib/services/search';
 import { mapSuccess } from 'fhir-react/lib/services/service';
 import { formatFHIRDateTime } from 'fhir-react/lib/utils/date';
 import { parseFHIRReference } from 'fhir-react/lib/utils/fhir';
-import { Encounter, Patient, Practitioner, PractitionerRole } from 'fhir/r4b';
-import { useMemo } from 'react';
 
 import { EncounterData } from 'src/components/EncountersTable/types';
 import { usePagerExtended } from 'src/hooks/pager';
@@ -23,6 +24,7 @@ interface EncountersListData {
         current: number;
         pageSize: number;
         total: number | undefined;
+        showSizeChanger?: boolean;
     };
 }
 

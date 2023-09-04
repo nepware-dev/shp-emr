@@ -4,8 +4,8 @@ import { Resource } from 'shared/src/contrib/aidbox';
 
 import { getArrayDisplay, getDisplay } from 'src/utils/questionnaire';
 
-import { AnswerReferenceProps, useAnswerReference } from '../widgets/reference';
 import s from './ReadonlyWidgets.module.scss';
+import { AnswerReferenceProps, useAnswerReference } from '../widgets/reference';
 
 function QuestionReferenceUnsafe<R extends Resource = any, IR extends Resource = any>(
     props: AnswerReferenceProps<R, IR>,

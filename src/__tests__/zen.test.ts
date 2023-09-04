@@ -1,5 +1,4 @@
-import { service } from 'aidbox-react/lib/services/service';
-import { mapSuccess } from 'aidbox-react/lib/services/service';
+import { service , mapSuccess } from 'aidbox-react/lib/services/service';
 import { ensure } from 'aidbox-react/lib/utils/tests';
 
 import { loginAdminUser } from 'src/setupTests';

@@ -3,8 +3,8 @@ import { useCallback } from 'react';
 
 import { DateColumnFilterValue } from 'src/components/SearchBar/types';
 
-import { SearchBarColumnDateTypeProps } from '../types';
 import { RangePickerOnChange } from './types';
+import { SearchBarColumnDateTypeProps } from '../types';
 
 export function useDateColumn<T>(props: SearchBarColumnDateTypeProps) {
     const { onChange, columnFilterValue } = props;

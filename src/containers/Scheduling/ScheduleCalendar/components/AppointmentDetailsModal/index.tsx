@@ -1,12 +1,13 @@
 import { t, Trans } from '@lingui/macro';
 import { Button } from 'antd';
+import { Appointment, Encounter, PractitionerRole } from 'fhir/r4b';
+
 import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
 import { useService } from 'fhir-react/lib/hooks/service';
 import { isSuccess } from 'fhir-react/lib/libs/remoteData';
 import { extractBundleResources, getFHIRResources } from 'fhir-react/lib/services/fhir';
 import { mapSuccess } from 'fhir-react/lib/services/service';
 import { parseFHIRReference } from 'fhir-react/lib/utils/fhir';
-import { Appointment, Encounter, PractitionerRole } from 'fhir/r4b';
 
 import { ReadonlyQuestionnaireResponseForm } from 'src/components/BaseQuestionnaireResponseForm/ReadonlyQuestionnaireResponseForm';
 import { Modal } from 'src/components/Modal';

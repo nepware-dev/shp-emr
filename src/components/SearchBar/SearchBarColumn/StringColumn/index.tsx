@@ -1,7 +1,7 @@
 import { Col, Input } from 'antd';
 
-import { SearchBarColumnStringTypeProps } from '../types';
 import { useStringColumn } from './hooks';
+import { SearchBarColumnStringTypeProps } from '../types';
 
 export function StringColumn<T>(props: SearchBarColumnStringTypeProps) {
     const { columnFilterValue } = props;

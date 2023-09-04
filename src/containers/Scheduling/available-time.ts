@@ -46,7 +46,7 @@ export function fromAvailableTime(availableTimes: PractitionerRoleAvailableTime[
             a.start!.localeCompare(b.start!),
         );
 
-        let breaks: ScheduleBreak[] = [];
+        const breaks: ScheduleBreak[] = [];
         if (sortedDayAvailableTimes.length > 1) {
             for (let i = 0; i < sortedDayAvailableTimes.length - 1; i++) {
                 const periodStart = sortedDayAvailableTimes[i]?.end;

@@ -1,7 +1,7 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { t } from '@lingui/macro';
 import { Button, notification } from 'antd';
-import { Patient } from 'fhir/r4b';
+import { Patient, QuestionnaireResponse } from 'fhir/r4b';
 import { useMemo, useState } from 'react';
 
 import { questionnaireIdLoader } from 'shared/src/hooks/questionnaire-response-form-data';
@@ -14,6 +14,30 @@ export interface ModalNewEncounterProps {
     patient: Patient;
     reloadEncounter: () => void;
 }
+
+const initialResponse: Partial<QuestionnaireResponse> = {
+  "resourceType": "QuestionnaireResponse",
+  "id": "example-response",
+  "questionnaire": "Questionnaire/496552",
+  "status": "completed",
+  "item": [
+    {
+      "linkId": "patientId"
+    },
+    {
+      "linkId": "patientName"
+    },
+    {
+      "linkId": "practitioner-role"
+    },
+    {
+      "linkId": "service"
+    },
+    {
+      "linkId": "date"
+    }
+  ]
+};
 
 export const ModalNewEncounter = ({ patient, reloadEncounter }: ModalNewEncounterProps) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -52,10 +76,11 @@ export const ModalNewEncounter = ({ patient, reloadEncounter }: ModalNewEncounte
                 maskClosable={false}
             >
                 <QuestionnaireResponseForm
-                    questionnaireLoader={questionnaireIdLoader('encounter-create')}
+                    questionnaireLoader={questionnaireIdLoader('496552')}
                     onSuccess={handleSuccess}
                     launchContextParameters={[{ name: 'Patient', resource: patient }]}
                     onCancel={() => setIsModalVisible(false)}
+                    initialQuestionnaireResponse={initialResponse}
                 />
             </Modal>
         </>

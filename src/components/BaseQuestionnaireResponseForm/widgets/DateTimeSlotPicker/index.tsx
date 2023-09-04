@@ -1,9 +1,4 @@
 import { Form } from 'antd';
-import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
-import { useService } from 'fhir-react/lib/hooks/service';
-import { extractBundleResources, getAllFHIRResources, getFHIRResource } from 'fhir-react/lib/services/fhir';
-import { mapSuccess, resolveMap } from 'fhir-react/lib/services/service';
-import { formatFHIRDate, formatFHIRDateTime, parseFHIRDateTime } from 'fhir-react/lib/utils/date';
 import { Reference, Appointment, PractitionerRole } from 'fhir/r4b';
 import _ from 'lodash';
 import moment from 'moment';
@@ -11,14 +6,20 @@ import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { QuestionItemProps } from 'sdc-qrf';
 
+import { RenderRemoteData } from 'fhir-react/lib/components/RenderRemoteData';
+import { useService } from 'fhir-react/lib/hooks/service';
+import { extractBundleResources, getAllFHIRResources, getFHIRResource } from 'fhir-react/lib/services/fhir';
+import { mapSuccess, resolveMap } from 'fhir-react/lib/services/service';
+import { formatFHIRDate, formatFHIRDateTime, parseFHIRDateTime } from 'fhir-react/lib/utils/date';
+
 import { humanDateTime } from 'shared/src/utils/date';
 
 import { DatePicker } from 'src/components/DatePicker';
 import { Spinner } from 'src/components/Spinner';
 import { useCalendarOptions } from 'src/containers/Scheduling/ScheduleCalendar/hooks/useCalendarOptions';
 
-import { useFieldController } from '../../hooks';
 import { getTimeSlots } from './utils';
+import { useFieldController } from '../../hooks';
 
 interface AvailableDatePickerProps extends QuestionItemProps {
     practitionerRolePath: Array<string | number>;
@@ -154,7 +155,7 @@ function AvailableDateControl(props: AvailableDatePickerProps & { practitionerRo
                         showNow={false}
                         showToday={false}
                         format={humanDateTime}
-                        minuteStep={5 as 5}
+                        minuteStep={5 as const}
                         onChange={(date) => onDateChange(
                             date,
                             timeSlots as TimeSlots,

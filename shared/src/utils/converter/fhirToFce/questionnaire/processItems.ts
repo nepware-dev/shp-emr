@@ -63,7 +63,7 @@ function processEnableWhenItem(item: FHIRQuestionnaireItemEnableWhen): FCEQuesti
 }
 
 function processEnableWhenAnswerOption(item: FHIRQuestionnaireItemEnableWhen) {
-    let answer: FCEQuestionnaireItemEnableWhenAnswer = {};
+    const answer: FCEQuestionnaireItemEnableWhenAnswer = {};
 
     switch (true) {
         case 'answerBoolean' in item:
